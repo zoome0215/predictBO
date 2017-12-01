@@ -6,6 +6,9 @@ There is no guarantee that these codes works.
 I have no responsibility on any of the consequences arising from modifying,running, and distributing this code.
 
 # How to use
+
+## Shaping data
+
 Go to 
 
 `http://www.histdata.com/download-free-forex-historical-data/?/ninjatrader/tick-last-quotes/usdjpy/`
@@ -22,5 +25,14 @@ and
 
 This will generate a csv files with all the USD/JPY data in an interval of 1 second
 (note that the linear extrapolation is taken for missing data points).
+
+## Making AI
+
+run 
+`make-AI-skl.py` this will create a base AI
+then run
+`prob_clas.py` this takes a probability distribution of the base AI and make further predictions.
+then run
+`backtest.py` to conduct backtesting.
 
 Enjoy.
