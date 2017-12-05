@@ -46,7 +46,7 @@ def calcreward(actionnow, diff_io,bet,gain,loss):
     downparam = -1
     restparam = 0
     if actionnow == restparam:
-        return -np.abs(loss)
+        return -loss
     else:
         if actionnow == upparam:
             if diff_io > 0 :

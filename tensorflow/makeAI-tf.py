@@ -46,7 +46,7 @@ if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-loss = payrate*(periodint*bet*target_rate/60.0)/2.0
+loss = (payrate-1)*(periodint*bet*target_rate/60.0)/2.0
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
@@ -87,14 +87,13 @@ for e in range(Nepochs):
         print 'epoch ', e
     for month in range(1,13):
         for i in range(0,1000):
-            moneynow=0
             datanow.loaddata(train_year,month,i)
             if (not datanow.exist_data) :
                 break
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
                 currepsilon = greed0*np.exp(-numlearns/1000.0)
-                currlr = lr0*np.exp(-numlearns/10000.0)
+                currlr = lr0*np.exp(-numlearns/2000.0)
 
                 if currepsilon < 0.05 :
                     currepsilon = 0.05

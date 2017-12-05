@@ -90,5 +90,6 @@ for month in range(1,2):
                     numTAs += 1
                     j += wait
                 else:
+                    print 'aaa'
                     j+= 1
     print '$', moneynow, ', ', numTAs/(numchances/(60*60/2)),' bets per hour'
