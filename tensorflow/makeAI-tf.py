@@ -43,7 +43,7 @@ wait = 5 #min
 
 possibleactions = (downparam,restparam,upparam)
 #weightactions = np.array([0.2,0.6,0.2])
-weightactions = np.array([1/3,1/3,1/3])
+weightactions = np.array([1/2,0,0.5])
 
 if betinterval < 10 :
     payrate = 1.85
@@ -73,8 +73,8 @@ datanow = data_util.tradedata()
 if cont_learn:
     print 'AI loaded!'
     learner.loadmodel();
-    lr0 =   0.00001
-    greed0= 0.05
+    lr0 =   1e-5
+    greed0= 0.1
 else:
     print 'Making a new AI!'
 
@@ -93,11 +93,11 @@ for e in range(Nepochs):
                 break
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
-                currepsilon = greed0*np.exp(-numlearns/1000.0)
-                currlr = lr0*np.exp(-numlearns/100.0)
+                currepsilon = greed0*np.exp(-numlearns/2000.0)
+                currlr = lr0*np.exp(-numlearns/2000.0)
 
-                if currepsilon < 0.05 :
-                    currepsilon = 0.05
+                if currepsilon < 0.1 :
+                    currepsilon = 0.1
                 if currlr < 1e-5 :
                     currlr = 1e-5
 
@@ -116,7 +116,9 @@ for e in range(Nepochs):
                         statenext = datnowall[1:interval+1]
                     else :
                         statenext = datnowall[wait:(interval+wait)]
-                    moneynow += reward
+
+                    moneynow+= reward
+
                     if moneynow < 0:
                         terminal=True
                         moneynow = initmoney
@@ -125,15 +127,16 @@ for e in range(Nepochs):
                     statenext = data_util.scaling(statenext)
                     learner.storeexperience(state,action,reward,statenext,terminal)
 
-                    if numtrials%(60*60*1/periodint) == 0:
+                    if (numtrials%(60*60*1/periodint)) == 0:
                         learner.experience_replay()
                         numlearns+= 1
 
-                    moneynow+= reward
+
                     if action == 0:
                         j+= 1
                     else :
                         j+=wait
+
                     numtrials += 1
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
                     'and lr =', currlr
