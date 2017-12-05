@@ -33,6 +33,9 @@ payrate=2
 initmoney = 200
 bet = 20
 
+lr0 =   0.01
+greed0= 1.0
+
 train_year = 2016
 Nepochs = 10000
 
@@ -46,7 +49,7 @@ if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-loss = (payrate-1)*(periodint*bet*target_rate/60.0)/2.0
+loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60))/3.0
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
@@ -74,8 +77,6 @@ if cont_learn:
     greed0= 0.05
 else:
     print 'Making a new AI!'
-    lr0 =   0.001
-    greed0= 1.0
 
 numdata=0
 numtrials = 0
@@ -93,12 +94,12 @@ for e in range(Nepochs):
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
                 currepsilon = greed0*np.exp(-numlearns/1000.0)
-                currlr = lr0*np.exp(-numlearns/2000.0)
+                currlr = lr0*np.exp(-numlearns/100.0)
 
                 if currepsilon < 0.05 :
                     currepsilon = 0.05
-                if currlr < 1e-8 :
-                    currlr = 1e-8
+                if currlr < 1e-5 :
+                    currlr = 1e-5
 
                 learner.set_epsilon(currepsilon)
                 learner.set_lr(currlr)
