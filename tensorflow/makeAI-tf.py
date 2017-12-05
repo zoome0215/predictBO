@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = True
+cont_learn = False
 
 interval = 15 # min 
 betinterval = 5 # min
