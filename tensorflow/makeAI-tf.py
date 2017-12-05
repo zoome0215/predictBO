@@ -70,16 +70,18 @@ datanow = data_util.tradedata()
 if cont_learn:
     print 'AI loaded!'
     learner.loadmodel();
-    lr0 =   0.04
-    greed0= 0.001
+    lr0 =   0.00001
+    greed0= 0.05
 else:
     print 'Making a new AI!'
-    lr0 =   0.1
+    lr0 =   0.001
     greed0= 1.0
 
 numdata=0
 numtrials = 0
 numlearns = 0
+
+moneynow=initmoney
 for e in range(Nepochs):
     if e%100 ==0:
         print 'epoch ', e
@@ -89,15 +91,15 @@ for e in range(Nepochs):
             datanow.loaddata(train_year,month,i)
             if (not datanow.exist_data) :
                 break
-            jlim = datanow.size()-(interval+betinterval)
+            jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
-                currepsilon = greed0*np.exp(-numlearns/50.0)
-                currlr = lr0*np.exp(-numlearns/400.0)
+                currepsilon = greed0*np.exp(-numlearns/1000.0)
+                currlr = lr0*np.exp(-numlearns/10000.0)
 
-                if currepsilon < 1e-3 :
-                    currepsilon = 1e-3
-                if currlr < 1e-5 :
-                    currlr = 1e-5
+                if currepsilon < 0.05 :
+                    currepsilon = 0.05
+                if currlr < 1e-8 :
+                    currlr = 1e-8
 
                 learner.set_epsilon(currepsilon)
                 learner.set_lr(currlr)
@@ -106,25 +108,33 @@ for e in range(Nepochs):
                 while j < jlim :
                     datnowall = datanow.get(j,interval+betinterval)
                     state = datnowall[:interval]
-                    diff_io = state[-1]-datnowall[-1]
+                    diff_io = state[-1]-datnowall[interval+betinterval-1]
                     state = data_util.scaling(state)
                     action = learner.select_action(state, learner.exploration)
                     reward = data_util.calcreward(action,diff_io,bet,gain,loss)
                     if action == 0:
                         statenext = datnowall[1:interval+1]
                     else :
-                        statenext = datnowall[-interval:]
-
+                        statenext = datnowall[wait:(interval+wait)]
+                    moneynow += reward
+                    if moneynow < 0:
+                        terminal=True
+                    else :
+                        terminal=False
+                        moneynow = initmoney
                     statenext = data_util.scaling(statenext)
-                    learner.storeexperience(state,action,reward,statenext)
+                    learner.storeexperience(state,action,reward,statenext,terminal)
 
-                    if numtrials%(60*60*12/periodint) == 0:
+                    if numtrials%(60*60*1/periodint) == 0:
                         learner.experience_replay()
                         numlearns+= 1
 
                     moneynow+= reward
+                    if action == 0:
+                        j+= 1
+                    else :
+                        j+=wait
                     numtrials += 1
-                    j+= 1
-                print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
-                        'and lr =', currlr
-        learner.savemodel()
+            print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
+                    'and lr =', currlr
+    learner.savemodel()

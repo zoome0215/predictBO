@@ -12,7 +12,7 @@ class learn:
         self.numactions = len(possibleactions)
         self.weightactions = weightactions
 
-        self.maxbatchsize = 10000
+        self.maxbatchsize = 128
         self.replaymemorysize = 400000
         self.D = deque(maxlen=self.replaymemorysize)
 
@@ -55,8 +55,8 @@ class learn:
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
 
-    def storeexperience(self, state_in, action_in, reward_in, statenext_in):
-        self.D.append((state_in, action_in, reward_in,statenext_in))
+    def storeexperience(self, state_in, action_in, reward_in, statenext_in,terminal_in):
+        self.D.append((state_in, action_in, reward_in,statenext_in,terminal_in))
 
     def experience_replay(self):
         state_minibatch = []
@@ -67,13 +67,16 @@ class learn:
         maxbatch_indexes = np.random.randint(0, len(self.D), maxbatchsize)
 
         for j in maxbatch_indexes:
-            state_j, action_j, reward_j, state_jp1= self.D[j]
+            state_j, action_j, reward_j, state_jp1, terminal = self.D[j]
             action_j_index = self.possibleactions.index(action_j)
 
             y_j = self.Q_values(state_j)
 
-            # reward_j + gamma * max_action' Q(state', action')
-            y_j[action_j_index] = reward_j + self.discount_factor * np.max(self.Q_values(state_jp1))
+            if terminal:
+                y_j[action_j_index] = reward_j
+            else :
+                # reward_j + gamma * max_action' Q(state', action')
+                y_j[action_j_index] = reward_j + self.discount_factor * np.max(self.Q_values(state_jp1))
 
             state_minibatch.append(state_j)
             y_minibatch.append(y_j)
