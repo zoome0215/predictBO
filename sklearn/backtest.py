@@ -66,7 +66,7 @@ payrate = 1.85
 
 # Load AI
 AIname = 'realuod_'+str(interval)+'_'+str(betinterval)+'_skl_dip_all'
-AIdir  = './AI/skl/'
+AIdir  = '../AI/skl/'
 
 AIname = AIdir+AIname
 if fitSVC == 1:
@@ -91,7 +91,7 @@ clf_class = joblib.load(extraclassname)
 interval = int(interval/periodint)
 betinterval = int(betinterval*60/periodint)
 
-datadir = './tickdata/twosecdata/'
+datadir = '../tickdata/twosecdata/'
 
 conseq = 0
 

@@ -76,7 +76,7 @@ periodint = 2
 payrate = 1.85
 
 # Load AI
-AIdir  = './AI/skl/'
+AIdir  = '../AI/skl/'
 AIname = 'realuod_'+str(interval)+'_'+str(betinterval)+'_skl_dip_all'
 AIname = AIname + AIsuffix
 AIname = AIdir+AIname
@@ -96,7 +96,7 @@ clf_out = neighbors.KNeighborsClassifier()
 #real thing
 interval = int(interval/periodint)
 betinterval = int(betinterval*60/periodint)
-datadir = './tickdata/twosecdata/'
+datadir = '../tickdata/twosecdata/'
 
 moneynow=200
 bet=20

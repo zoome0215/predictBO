@@ -31,7 +31,7 @@ def loaddata(interval,predinterval,rest_time):
     length = interval+predinterval
     traindata = []
     teacherdata = []
-    datadir = './tickdata/twosecdata/'
+    datadir = '../tickdata/twosecdata/'
     for year in range(2015,2016):
         for month in range(1,12) :
             for i in range(0,10000) :
@@ -72,7 +72,7 @@ def testloaddata(interval,predinterval,rest_time):
     length = interval+predinterval
     traindata = []
     teacherdata = []
-    datadir = './tickdata/twosecdata/'
+    datadir = '../tickdata/twosecdata/'
     for year in range(2015,2016):
         for month in range(12,13) :
             for i in range(0,10000) :
@@ -400,7 +400,7 @@ if testmode != 1:
 testdata = np.reshape(testdata,[-1,interval])
 
 #making AI
-outdir  = './AI/skl/'
+outdir  = '../AI/skl/'
 if not os.path.exists(outdir):
     os.makedirs(outdir)
 outname = outdir+outname

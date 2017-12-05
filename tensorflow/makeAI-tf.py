@@ -1,0 +1,130 @@
+#!/usr/bin/python
+from __future__ import division
+
+import numpy as np
+import os, os.path
+import sys
+import time
+from datetime import datetime
+import pickle
+
+#graphing
+import matplotlib.pyplot as plt
+
+#own python dependencies
+import data_util
+import learning_util
+
+upparam = 1
+downparam = -1
+restparam = 0
+
+#############################
+cont_learn = False
+
+interval = 15 # min 
+betinterval = 5 # min
+periodint = 2
+
+outname = 'realuod_'+str(interval)+'_'+str(betinterval)+'_tf'
+
+target_rate = 4 # per hour
+payrate=2
+initmoney = 200
+bet = 20
+
+train_year = 2016
+Nepochs = 10000
+
+wait = 5 #min
+
+possibleactions = (downparam,restparam,upparam)
+#weightactions = np.array([0.2,0.6,0.2])
+weightactions = np.array([1/3,1/3,1/3])
+
+if betinterval < 10 :
+    payrate = 1.85
+
+gain = bet*(payrate-1)
+loss = (periodint*bet*target_rate/60)/10
+
+print 'tested on', datetime.today()
+print 'interval of ' , interval ,' min'
+print 'loss is', loss
+print 'making AI...'
+
+#Converting the intervals to array length
+interval = int(interval*60/periodint)
+betinterval = int(betinterval*60/periodint)
+wait = int(wait*60/2)
+
+#making AI
+outdir  = '../AI/tf/'
+outname = outdir+outname
+
+learner = learning_util.learn(outname,possibleactions,weightactions,interval)
+
+#load data
+datanow = data_util.tradedata()
+
+if cont_learn:
+    print 'AI loaded!'
+    learner.loadmodel();
+    lr0 =   0.04
+    greed0= 0.001
+else:
+    print 'Making a new AI!'
+    lr0 =   0.1
+    greed0= 1.0
+
+numdata=0
+numtrials = 0
+numlearns = 0
+for e in range(Nepochs):
+    if e%100 ==0:
+        print 'epoch ', e
+    for month in range(1,13):
+        for i in range(0,1000):
+            moneynow=0
+            datanow.loaddata(train_year,month,i)
+            if (not datanow.exist_data) :
+                break
+            jlim = datanow.size()-(interval+betinterval)
+            if jlim >100 :
+                currepsilon = greed0*np.exp(-numlearns/50.0)
+                currlr = lr0*np.exp(-numlearns/400.0)
+
+                if currepsilon < 1e-3 :
+                    currepsilon = 1e-3
+                if currlr < 1e-5 :
+                    currlr = 1e-5
+
+                learner.set_epsilon(currepsilon)
+                learner.set_lr(currlr)
+                numdata+=jlim
+                j=0
+                while j < jlim :
+                    datnowall = datanow.get(j,interval+betinterval)
+                    state = datnowall[:interval]
+                    diff_io = state[-1]-datnowall[-1]
+                    state = data_util.scaling(state)
+                    action = learner.select_action(state, learner.exploration)
+                    reward = data_util.calcreward(action,diff_io,bet,gain,loss)
+                    if action == 0:
+                        statenext = datnowall[1:interval+1]
+                    else :
+                        statenext = datnowall[-interval:]
+
+                    statenext = data_util.scaling(statenext)
+                    learner.storeexperience(state,action,reward,statenext)
+
+                    if numtrials%(60*60*12/periodint) == 0:
+                        learner.experience_replay()
+                        numlearns+= 1
+
+                    moneynow+= reward
+                    numtrials += 1
+                    j+= 1
+                print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
+                        'and lr =', currlr
+        learner.savemodel()
