@@ -46,7 +46,7 @@ if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-loss = (periodint*bet*target_rate/60)/10
+loss = payrate*(periodint*bet*target_rate/60.0)/2.0
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
@@ -118,10 +118,10 @@ for e in range(Nepochs):
                         statenext = datnowall[wait:(interval+wait)]
                     moneynow += reward
                     if moneynow < 0:
-                        terminal=False
-                    else :
                         terminal=True
                         moneynow = initmoney
+                    else :
+                        terminal=False
                     statenext = data_util.scaling(statenext)
                     learner.storeexperience(state,action,reward,statenext,terminal)
 
