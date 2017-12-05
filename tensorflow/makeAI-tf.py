@@ -118,9 +118,9 @@ for e in range(Nepochs):
                         statenext = datnowall[wait:(interval+wait)]
                     moneynow += reward
                     if moneynow < 0:
-                        terminal=True
-                    else :
                         terminal=False
+                    else :
+                        terminal=True
                         moneynow = initmoney
                     statenext = data_util.scaling(statenext)
                     learner.storeexperience(state,action,reward,statenext,terminal)
