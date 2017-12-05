@@ -41,8 +41,8 @@ class learn:
 
         #loss
         self.y_ = tf.placeholder(tf.float32, [None, self.numactions])
-        self.loss = tf.losses.huber_loss(self.y_,self.y)
-        #self.loss = tf.reduce_mean(tf.square(self.y_ - self.y))
+        #self.loss = tf.losses.huber_loss(self.y_,self.y)
+        self.loss = tf.reduce_mean(tf.square(self.y_ - self.y))
 
         # train operation
         optimizer = tf.train.RMSPropOptimizer(self.learning_rate)
