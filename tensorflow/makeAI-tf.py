@@ -33,10 +33,10 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   1e-6
+lr0 =   1e-10
 greed0= 0.484566791791
 
-lrthresh = 1e-6
+lrthresh = 1e-15
 epsthresh = 0.1
 
 train_year = 2016
@@ -84,6 +84,9 @@ numtrials = 0
 numlearns = 0
 
 moneynow=initmoney
+actioncount = 0
+lastaction = 1
+
 for e in range(Nepochs):
     if e%100 ==0:
         print 'epoch ', e
@@ -120,6 +123,16 @@ for e in range(Nepochs):
                     else :
                         statenext = datnowall[wait:(interval+wait)]
 
+                    if (lastaction == 0) and (action == 0) :
+                        actioncounter += 1
+                    else :
+                        actioncounter = 0
+
+                    if actioncounter > (10*60/2) :
+                        actioncounter = 0
+                        reward =  -((payrate-1)*(periodint*bet*target_rate)/2.0)
+
+
                     moneynow+= reward
 
                     if moneynow < 0:
@@ -141,6 +154,8 @@ for e in range(Nepochs):
                     else :
                         j+=wait
                     numtrials += 1
+
+                    lastaction = action
 
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
                     'and lr =', currlr
