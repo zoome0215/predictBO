@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-checkQ = True
+checkQ = False
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -65,11 +65,14 @@ learner.loadmodel()
 #load data
 datanow = data_util.tradedata()
 
-moneynow=0
+moneynow=initmoney
 numchances = 0 
 numTAs = 0
 
 Qchecked = False
+count = 0
+countthresh = 10
+
 for month in range(1,2):
     for i in range(0,1000):
         datanow.loaddata(test_year,month,i)
@@ -78,7 +81,6 @@ for month in range(1,2):
         jlim = datanow.size()-(interval+betinterval)
         if jlim >(wait+interval) :
             j=0
-            print test_year,month,i
             numchances += jlim
 
             while j < jlim :
@@ -99,7 +101,10 @@ for month in range(1,2):
                 else:
                     j+= 1
             if checkQ:
-                Qchecked = True
-            print '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)),' bets per hour'
+                count += 1
+                if count > countthresh:
+                    Qchecked = True
+            print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
+            ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
             if Qchecked :
                 sys.exit(0)
