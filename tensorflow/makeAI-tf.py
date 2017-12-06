@@ -33,7 +33,7 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   1e-5
+lr0 =   1e-6
 greed0= 1.0
 
 lrthresh = 1e-6
