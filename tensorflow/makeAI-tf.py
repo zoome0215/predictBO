@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = True
+cont_learn = False
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -33,10 +33,10 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   1e-10
-greed0= 0.484566791791
+lr0 =   1e-3
+greed0= 1.0
 
-lrthresh = 1e-15
+lrthresh = 1e-8
 epsthresh = 0.1
 
 train_year = 2016
@@ -97,7 +97,7 @@ for e in range(Nepochs):
                 break
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
-                currepsilon = greed0*np.exp(-numlearns/2000.0)
+                currepsilon = greed0*np.exp(-numlearns/5000.0)
                 currlr = lr0*np.exp(-numlearns/10000.0)
 
                 if currepsilon < epsthresh :

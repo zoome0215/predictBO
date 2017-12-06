@@ -15,6 +15,9 @@ import matplotlib.pyplot as plt
 import data_util
 import learning_util
 
+#plotting
+import matplotlib.pyplot as plt
+
 upparam = 1
 downparam = -1
 restparam = 0
@@ -73,6 +76,7 @@ Qchecked = False
 count = 0
 countthresh = 2
 
+Qvals=[]
 for month in range(1,2):
     for i in range(0,1000):
         datanow.loaddata(test_year,month,i)
@@ -92,7 +96,7 @@ for month in range(1,2):
 
                 action = learner.select_action_norandom(state)
                 if checkQ :
-                    print learner.Q_values(state),action
+                    Qvals.append(learner.Q_values(state))
                 reward = data_util.calcreward_bt(action,diff_io,bet,gain)
                 moneynow+= reward
                 if action != 0:
@@ -109,6 +113,13 @@ for month in range(1,2):
             if checkQ:
                 count += 1
                 if count > countthresh:
+                    Qvals = np.array(Qvals)
+                    Qvals = np.squeeze(Qvals)
+                    plt.plot(range(0,Qvals.shape[0]),Qvals[:,0],label='down')
+                    plt.plot(range(0,Qvals.shape[0]),Qvals[:,1],label='stay')
+                    plt.plot(range(0,Qvals.shape[0]),Qvals[:,2],label='up')
+                    plt.legend()
+                    plt.show()
                     Qchecked = True
 
             print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
