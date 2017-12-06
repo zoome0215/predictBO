@@ -20,6 +20,8 @@ downparam = -1
 restparam = 0
 
 #############################
+checkQ = True
+
 interval = 15 # min 
 betinterval = 5 # min
 periodint = 2
@@ -42,17 +44,15 @@ if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-loss = (periodint*bet*target_rate/60)/10
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
-print 'loss is', loss
 print 'making AI...'
 
 #Converting the intervals to array length
 interval = int(interval*60/periodint)
 betinterval = int(betinterval*60/periodint)
-wait = int(wait*60/2)
+wait = int(wait*60/periodint)
 
 #making AI
 outdir  = '../AI/tf/'
@@ -68,21 +68,28 @@ datanow = data_util.tradedata()
 moneynow=0
 numchances = 0 
 numTAs = 0
+
+Qchecked = False
 for month in range(1,2):
     for i in range(0,1000):
         datanow.loaddata(test_year,month,i)
         if (not datanow.exist_data) :
             break
         jlim = datanow.size()-(interval+betinterval)
-        if jlim >100 :
+        if jlim >(wait+interval) :
             j=0
             print test_year,month,i
             numchances += jlim
+
             while j < jlim :
+
                 datnowall = datanow.get(j,interval+betinterval)
                 state = datnowall[:interval]
                 diff_io=state[-1]-datnowall[-1]
                 state = data_util.scaling(state)
+                if checkQ :
+                    print learner.Q_values(state)
+
                 action = learner.select_action_norandom(state)
                 reward = data_util.calcreward_bt(action,diff_io,bet,gain)
                 moneynow+= reward
@@ -91,4 +98,8 @@ for month in range(1,2):
                     j += wait
                 else:
                     j+= 1
-    print '$', moneynow, ', ', numTAs/(numchances/(60*60/2)),' bets per hour'
+            if checkQ:
+                Qchecked = True
+            print '$', moneynow, ', ', numTAs/(numchances/(60*60/2)),' bets per hour'
+            if Qchecked :
+                sys.exit(0)

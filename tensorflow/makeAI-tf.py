@@ -33,7 +33,7 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   0.01
+lr0 =   0.001
 greed0= 1.0
 
 train_year = 2016
@@ -49,7 +49,7 @@ if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60))/3.0
+loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60.0))
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
@@ -94,24 +94,26 @@ for e in range(Nepochs):
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
                 currepsilon = greed0*np.exp(-numlearns/2000.0)
-                currlr = lr0*np.exp(-numlearns/2000.0)
+                currlr = lr0*np.exp(-numlearns/10000.0)
 
                 if currepsilon < 0.1 :
                     currepsilon = 0.1
-                if currlr < 1e-5 :
-                    currlr = 1e-5
+                if currlr < 1e-7 :
+                    currlr = 1e-7
 
                 learner.set_epsilon(currepsilon)
                 learner.set_lr(currlr)
                 numdata+=jlim
+
                 j=0
                 while j < jlim :
-                    datnowall = datanow.get(j,interval+betinterval)
+                    datnowall = datanow.get(j,interval+max(betinterval,wait))
                     state = datnowall[:interval]
                     diff_io = state[-1]-datnowall[interval+betinterval-1]
                     state = data_util.scaling(state)
                     action = learner.select_action(state, learner.exploration)
                     reward = data_util.calcreward(action,diff_io,bet,gain,loss)
+
                     if action == 0:
                         statenext = datnowall[1:interval+1]
                     else :
@@ -124,6 +126,7 @@ for e in range(Nepochs):
                         moneynow = initmoney
                     else :
                         terminal=False
+
                     statenext = data_util.scaling(statenext)
                     learner.storeexperience(state,action,reward,statenext,terminal)
 
@@ -136,8 +139,8 @@ for e in range(Nepochs):
                         j+= 1
                     else :
                         j+=wait
-
                     numtrials += 1
+
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
                     'and lr =', currlr
-    learner.savemodel()
+        learner.savemodel()

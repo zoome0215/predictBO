@@ -65,6 +65,7 @@ def calcreward_bt(actionnow,diff_io,bet,gain):
     upparam = 1
     downparam = -1
     restparam = 0
+
     if actionnow == restparam:
         return 0
     else:

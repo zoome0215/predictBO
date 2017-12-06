@@ -19,29 +19,62 @@ class learn:
         self.veclen = interval
         self.num_1stlayer = int(interval/2)
         self.learning_rate = 0.01
-        self.discount_factor = 0.95
+        self.discount_factor = 0.9
         self.exploration = 0.1
+
+        self.numfilter1 = 16
+        self.numfilter2 = 32
+
         self.init_model()
 
     def init_model(self):
         self.x = tf.placeholder(tf.float32, [None,self.veclen])
-        #fully connected
-        W_fc1 = tf.Variable(tf.truncated_normal([self.veclen, self.num_1stlayer], stddev=0.01))
-        b_fc1 = tf.Variable(tf.constant(0.01,shape=[self.num_1stlayer]))
+        x_ = tf.reshape(tensor=self.x,shape=[tf.shape(self.x)[0],self.veclen,1])
+
+        #raw input
+        W_fc1 = tf.Variable(tf.truncated_normal([self.veclen,1024], stddev=0.01))
+        b_fc1 = tf.Variable(tf.constant(0.01,shape=[1024]))
         h_fc1 = tf.nn.relu(tf.matmul(self.x, W_fc1) + b_fc1)
 
-        W_fc2 = tf.Variable(tf.truncated_normal([self.num_1stlayer, int(0.5*self.num_1stlayer)], stddev=0.01))
-        b_fc2 = tf.Variable(tf.truncated_normal([int(0.5*self.num_1stlayer)], stddev=0.01))
-        h_fc2 = tf.nn.relu(tf.matmul(h_fc1, W_fc2) + b_fc2)
+        #convoluion
+        convlen1 = int(5*60/2)
+        W_C1 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen1,1,self.numfilter1], stddev=0.01),int(convlen1/10),padding="VALID")
+        b_C1 = tf.Variable(tf.truncated_normal([self.numfilter1], stddev=0.01))
+        h_C1 = tf.nn.relu( W_C1 + b_C1)
+
+        #convoluion
+        convlen2 = int(1*60/2)
+        W_C2 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen2,1,self.numfilter2], stddev=0.01),int(convlen2/10),padding="VALID")
+        b_C2 = tf.Variable(tf.truncated_normal([self.numfilter2], stddev=0.01))
+        h_C2 = tf.nn.relu( W_C2 + b_C2)
+
+        #Merge raw with C1
+        shape_tmp = h_C1.shape
+        secondd_1 = int(shape_tmp[1]*shape_tmp[2])
+        reshape_tmp = tf.reshape(h_C1,shape=[-1,secondd_1])
+
+        W_M1 = tf.Variable(tf.truncated_normal([secondd_1,1024], stddev=0.01))
+        b_M1 = tf.Variable(tf.constant(0.01,shape=[1024]))
+        h_M1 = tf.nn.relu(tf.matmul(reshape_tmp, W_M1) + b_M1)
+
+        shape_tmp = h_C2.shape
+        secondd_2 = int(shape_tmp[1]*shape_tmp[2])
+        reshape_tmp = tf.reshape(h_C2,shape=[-1,secondd_2])
+
+        W_M2 = tf.Variable(tf.truncated_normal([secondd_2,1024], stddev=0.01))
+        b_M2 = tf.Variable(tf.constant(0.01,shape=[1024]))
+        h_M2 = tf.nn.relu(tf.matmul(reshape_tmp, W_M2) + b_M2)
+
+        b_M3 = tf.Variable(tf.constant(0.01,shape=[1024]))
+        h_M3 = tf.nn.relu(h_fc1+h_M2+h_M1+b_M3)
 
         #output
-        W_out = tf.Variable(tf.truncated_normal([int(0.5*self.num_1stlayer), self.numactions], stddev=0.01))
-        b_out = tf.Variable(tf.constant(0.1,shape=[self.numactions]))
-        self.y = tf.matmul(h_fc2,W_out) + b_out
+        W_out = tf.Variable(tf.truncated_normal([1024, self.numactions], stddev=0.01))
+        b_out = tf.Variable(tf.constant(0.01,shape=[self.numactions]))
+        self.y = tf.matmul(h_M3,W_out) + b_out
 
         #loss
         self.y_ = tf.placeholder(tf.float32, [None, self.numactions])
-        #self.loss = tf.losses.huber_loss(self.y_,self.y)
         self.loss = tf.reduce_mean(tf.square(self.y_ - self.y))
 
         # train operation
