@@ -102,7 +102,7 @@ class learn:
 
         W_A1 = tf.Variable(tf.truncated_normal([int(all_in.shape[1]),1024], stddev=0.01))
         b_A1 = tf.Variable(tf.constant(0.01,shape=[1024]))
-        h_A1 = tf.nn.relu(tf.matmul(all_in,W_A1) + b_A1)
+        h_A1 = tf.nn.tanh(tf.matmul(all_in,W_A1) + b_A1)
 
         #output
         W_out = tf.Variable(tf.truncated_normal([1024, self.numactions], stddev=0.01))

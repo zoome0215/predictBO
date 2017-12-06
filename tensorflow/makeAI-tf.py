@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = False
+cont_learn = True
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -33,8 +33,8 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   1e-3
-greed0= 1.0
+lr0 =   0.0001
+greed0= 0.827538207989
 
 lrthresh = 1e-8
 epsthresh = 0.1
@@ -57,7 +57,6 @@ loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60.0))/2.0
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
 print 'loss is', loss
-print 'making AI...'
 
 #Converting the intervals to array length
 interval = int(interval*60/periodint)
@@ -97,7 +96,7 @@ for e in range(Nepochs):
                 break
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim >100 :
-                currepsilon = greed0*np.exp(-numlearns/5000.0)
+                currepsilon = greed0*np.exp(-numlearns/100000.0)
                 currlr = lr0*np.exp(-numlearns/10000.0)
 
                 if currepsilon < epsthresh :
@@ -153,6 +152,7 @@ for e in range(Nepochs):
                         j+= 1
                     else :
                         j+=wait
+
                     numtrials += 1
 
                     lastaction = action
