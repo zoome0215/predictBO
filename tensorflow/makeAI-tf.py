@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = False
+cont_learn = True
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -34,7 +34,7 @@ initmoney = 200
 bet = 20
 
 lr0 =   1e-6
-greed0= 1.0
+greed0= 0.671997942648
 
 lrthresh = 1e-6
 epsthresh = 0.1
@@ -46,13 +46,13 @@ wait = 5 #min
 
 possibleactions = (downparam,restparam,upparam)
 #weightactions = np.array([0.2,0.6,0.2])
-weightactions = np.array([1/2,0,0.5])
+weightactions = np.array([0.4,0.2,0.4])
 
 if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60.0))
+loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60.0))/2.0
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'

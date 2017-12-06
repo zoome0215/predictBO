@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-checkQ = False
+checkQ = True
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -71,7 +71,7 @@ numTAs = 0
 
 Qchecked = False
 count = 0
-countthresh = 10
+countthresh = 2
 
 for month in range(1,2):
     for i in range(0,1000):
@@ -89,10 +89,10 @@ for month in range(1,2):
                 state = datnowall[:interval]
                 diff_io=state[-1]-datnowall[-1]
                 state = data_util.scaling(state)
-                if checkQ :
-                    print learner.Q_values(state)
 
                 action = learner.select_action_norandom(state)
+                if checkQ :
+                    print learner.Q_values(state),action
                 reward = data_util.calcreward_bt(action,diff_io,bet,gain)
                 moneynow+= reward
                 if action != 0:
@@ -100,11 +100,18 @@ for month in range(1,2):
                     j += wait
                 else:
                     j+= 1
+                if moneynow < 0:
+                    print 'money became negative'
+                    print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
+                        ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
+                    sys.exit(0)
+
             if checkQ:
                 count += 1
                 if count > countthresh:
                     Qchecked = True
+
             print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
-            ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
+                ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
             if Qchecked :
                 sys.exit(0)
