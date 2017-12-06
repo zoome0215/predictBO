@@ -65,13 +65,16 @@ class learn:
         b_M2 = tf.Variable(tf.constant(0.01,shape=[1024]))
         h_M2 = tf.nn.relu(tf.matmul(reshape_tmp, W_M2) + b_M2)
 
-        b_M3 = tf.Variable(tf.constant(0.01,shape=[1024]))
-        h_M3 = tf.nn.relu(h_fc1+h_M2+h_M1+b_M3)
+        all_in = tf.concat([h_M1,h_M2,h_fc1],axis=1)
+
+        W_A1 = tf.Variable(tf.truncated_normal([int(all_in.shape[1]),1024], stddev=0.01))
+        b_A1 = tf.Variable(tf.constant(0.01,shape=[1024]))
+        h_A1 = tf.nn.relu(tf.matmul(all_in,W_A1) + b_A1)
 
         #output
         W_out = tf.Variable(tf.truncated_normal([1024, self.numactions], stddev=0.01))
         b_out = tf.Variable(tf.constant(0.01,shape=[self.numactions]))
-        self.y = tf.matmul(h_M3,W_out) + b_out
+        self.y = tf.matmul(h_A1,W_out) + b_out
 
         #loss
         self.y_ = tf.placeholder(tf.float32, [None, self.numactions])

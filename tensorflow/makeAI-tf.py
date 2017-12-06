@@ -33,8 +33,11 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   0.001
+lr0 =   1e-5
 greed0= 1.0
+
+lrthresh = 1e-6
+epsthresh = 0.1
 
 train_year = 2016
 Nepochs = 10000
@@ -73,8 +76,6 @@ datanow = data_util.tradedata()
 if cont_learn:
     print 'AI loaded!'
     learner.loadmodel();
-    lr0 =   1e-5
-    greed0= 0.1
 else:
     print 'Making a new AI!'
 
@@ -96,10 +97,10 @@ for e in range(Nepochs):
                 currepsilon = greed0*np.exp(-numlearns/2000.0)
                 currlr = lr0*np.exp(-numlearns/10000.0)
 
-                if currepsilon < 0.1 :
-                    currepsilon = 0.1
-                if currlr < 1e-7 :
-                    currlr = 1e-7
+                if currepsilon < epsthresh :
+                    currepsilon = epsthresh
+                if currlr < lrthresh :
+                    currlr = lrthresh
 
                 learner.set_epsilon(currepsilon)
                 learner.set_lr(currlr)

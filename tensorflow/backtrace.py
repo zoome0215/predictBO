@@ -100,6 +100,6 @@ for month in range(1,2):
                     j+= 1
             if checkQ:
                 Qchecked = True
-            print '$', moneynow, ', ', numTAs/(numchances/(60*60/2)),' bets per hour'
+            print '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)),' bets per hour'
             if Qchecked :
                 sys.exit(0)
