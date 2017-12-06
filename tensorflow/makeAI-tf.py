@@ -34,7 +34,7 @@ initmoney = 200
 bet = 20
 
 lr0 =   1e-6
-greed0= 0.671997942648
+greed0= 0.484566791791
 
 lrthresh = 1e-6
 epsthresh = 0.1

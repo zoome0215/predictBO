@@ -8,7 +8,7 @@ class tradedata:
         self.exist_data = False
 
     def loaddata(self,year,month,i):
-        datadir = '../../data/tickdata/twosecdata/'
+        datadir = '../data/tickdata/twosecdata/'
         fname=datadir+'data'+str(year) + "-" + str(month).zfill(2) + "-" + str(i).zfill(4)+".out"
         if (os.path.isfile(fname)) :
             vals = []
