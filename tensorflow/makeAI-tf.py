@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = True
+cont_learn = False
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -33,8 +33,8 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   7.31165891657e-06
-greed0= 0.63707365637
+lr0 =   0.0001
+greed0= 1.0
 
 lrthresh = 1e-8
 epsthresh = 0.1
@@ -97,8 +97,8 @@ for e in range(Nepochs):
                 break
             jlim = datanow.size()-(interval+max(betinterval,wait))
             if jlim > (wait+interval):
-                currepsilon = greed0*np.exp(-numlearns/100000.0)
-                currlr = lr0*np.exp(-numlearns/10000.0)
+                currepsilon = greed0*np.exp(-numlearns/20000.0)
+                currlr = lr0*np.exp(-numlearns/2000.0)
 
                 if currepsilon < epsthresh :
                     currepsilon = epsthresh
@@ -144,7 +144,7 @@ for e in range(Nepochs):
                     statenext = data_util.scaling(statenext)
                     learner.storeexperience(state,action,reward,statenext,terminal)
 
-                    if (numtrials%(60*60*1/periodint)) == 0:
+                    if (numtrials%(60*60*5/periodint)) == 0:
                         learner.experience_replay()
                         numlearns+= 1
 
@@ -158,6 +158,6 @@ for e in range(Nepochs):
 
                     lastaction = action
 
-                print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
-                        'and lr =', currlr
+        print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
+                'and lr =', currlr
         learner.savemodel()

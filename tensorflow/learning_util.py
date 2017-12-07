@@ -14,7 +14,7 @@ class learn:
         self.weightactions = weightactions
 
         self.maxbatchsize = 32
-        self.replaymemorysize = 400000
+        self.replaymemorysize = 1200000
         self.D = deque(maxlen=self.replaymemorysize)
 
         self.veclen = interval
