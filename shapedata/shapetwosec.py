@@ -6,13 +6,13 @@ import datetime
 import pytz
 
 year=2017
-datadir="../../data/tickdata/twosecdata/"
+datadir="../data/tickdata/twosecdata/"
 
 for year in range(1999,2020):
     for i in range(1,13):
         truncatedfname=datadir + "data"+str(year)+"-"+str(i).zfill(2)+"-0000.out"
         if not os.path.isfile(truncatedfname) :
-            fname="../tickdata/truncateddata/data"+str(year)+"-"+str(i).zfill(2)+".txt"
+            fname="../data/tickdata/truncateddata/data"+str(year)+"-"+str(i).zfill(2)+".txt"
             if os.path.isfile(fname) :
                 print year,i
                 data = open(fname)
@@ -28,7 +28,7 @@ for year in range(1999,2020):
                 outvals=[]
                 outdates=[]
                 for k in range(0,len(vals)) :
-                    outname="../tickdata/twosecdata/data"+str(year)+"-"+str(i).zfill(2)+"-"+str(j).zfill(4)+".out"
+                    outname="../data/tickdata/twosecdata/data"+str(year)+"-"+str(i).zfill(2)+"-"+str(j).zfill(4)+".out"
                     outvals.append(vals[k])
                     outdates.append(dates[k])
                     if (k + 1) < len(vals) :

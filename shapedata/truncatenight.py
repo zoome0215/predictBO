@@ -9,8 +9,8 @@ for year in range(2010,2020) :
         truncatedfname=datadir + "data"+str(year)+"-"+str(i).zfill(2)+"-0000.out"
         if not os.path.isfile(truncatedfname) :
             print year,i 
-            fname="../tickdata/rawdata/DAT_NT_USDJPY_T_LAST_"+str(year)+str(i).zfill(2)+".csv"
-            outname="../tickdata/truncateddata/data"+str(year)+"-"+str(i).zfill(2)+".txt"
+            fname="../data/tickdata/rawdata/DAT_NT_USDJPY_T_LAST_"+str(year)+str(i).zfill(2)+".csv"
+            outname="../data/tickdata/truncateddata/data"+str(year)+"-"+str(i).zfill(2)+".txt"
             if os.path.isfile(fname) :
                 print 'outputting'
                 outdata = open(outname, "w")
