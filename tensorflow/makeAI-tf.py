@@ -95,7 +95,7 @@ for e in range(Nepochs):
             if (not datanow.exist_data) :
                 break
             jlim = datanow.size()-(interval+max(betinterval,wait))
-            if jlim >100 :
+            if jlim > (wait+interval):
                 currepsilon = greed0*np.exp(-numlearns/100000.0)
                 currlr = lr0*np.exp(-numlearns/10000.0)
 
