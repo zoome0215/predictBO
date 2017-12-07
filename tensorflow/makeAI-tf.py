@@ -33,8 +33,8 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   0.0001
-greed0= 0.827538207989
+lr0 =   1.94932877037e-05
+greed0= 0.702710695726
 
 lrthresh = 1e-8
 epsthresh = 0.1
@@ -157,6 +157,6 @@ for e in range(Nepochs):
 
                     lastaction = action
 
-            print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
-                    'and lr =', currlr
+                print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
+                        'and lr =', currlr
         learner.savemodel()
