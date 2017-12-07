@@ -1,0 +1,3 @@
+laptop log
+#stopped at 16000
+#stopped at 8000

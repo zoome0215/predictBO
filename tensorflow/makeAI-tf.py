@@ -33,8 +33,8 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   1.59821134252e-05
-greed0= 0.688892529872
+lr0 =   7.31165891657e-06
+greed0= 0.63707365637
 
 lrthresh = 1e-8
 epsthresh = 0.1
@@ -53,7 +53,7 @@ if betinterval < 10 :
 
 gain = bet*(payrate-1)
 #loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60.0))/2.0
-loss=0
+loss=0.0
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'

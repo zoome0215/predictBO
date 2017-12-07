@@ -23,7 +23,7 @@ downparam = -1
 restparam = 0
 
 #############################
-checkQ = True
+checkQ = False
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -74,7 +74,7 @@ numTAs = 0
 
 Qchecked = False
 count = 0
-countthresh = 4
+countthresh = 5
 
 Qvals=[]
 for month in range(1,2):
