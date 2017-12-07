@@ -3,7 +3,7 @@ import numpy as np
 import datetime
 import pytz
 
-datadir="../tickdata/twosecdata/"
+datadir="../data/tickdata/twosecdata/"
 for year in range(2010,2020) :
     for i in range(1,13):
         truncatedfname=datadir + "data"+str(year)+"-"+str(i).zfill(2)+"-0000.out"

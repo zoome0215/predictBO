@@ -15,7 +15,7 @@ Go to
 
 Download the zip files for all the month from January of 2015 up to now, extract, and put the csv files in 
 
-`tickdata/rawdata/`
+`./data/tickdata/rawdata/`
 
 Go in to the folder `shapedata` run 
 

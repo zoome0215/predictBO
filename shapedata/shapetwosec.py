@@ -6,7 +6,7 @@ import datetime
 import pytz
 
 year=2017
-datadir="../tickdata/twosecdata/"
+datadir="../../data/tickdata/twosecdata/"
 
 for year in range(1999,2020):
     for i in range(1,13):
