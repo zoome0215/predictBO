@@ -113,16 +113,16 @@ for month in range(1,2):
             if checkQ:
                 count += 1
                 if count > countthresh:
-                    Qvals = np.array(Qvals)
-                    Qvals = np.squeeze(Qvals)
-                    plt.plot(range(0,Qvals.shape[0]),Qvals[:,0],label='down')
-                    plt.plot(range(0,Qvals.shape[0]),Qvals[:,1],label='stay')
-                    plt.plot(range(0,Qvals.shape[0]),Qvals[:,2],label='up')
-                    plt.legend()
-                    plt.show()
                     Qchecked = True
 
             print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
                 ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
             if Qchecked :
+                Qvals = np.array(Qvals)
+                Qvals = np.squeeze(Qvals)
+                plt.plot(range(0,Qvals.shape[0]),Qvals[:,0],label='down')
+                plt.plot(range(0,Qvals.shape[0]),Qvals[:,1],label='stay')
+                plt.plot(range(0,Qvals.shape[0]),Qvals[:,2],label='up')
+                plt.legend()
+                plt.show()
                 sys.exit(0)
