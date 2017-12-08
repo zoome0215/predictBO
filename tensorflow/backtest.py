@@ -99,6 +99,7 @@ for month in range(1,2):
                     Qvals.append(learner.Q_values(state))
                 reward = data_util.calcreward_bt(action,diff_io,bet,gain)
                 moneynow+= reward
+
                 if action != 0:
                     numTAs += 1
                     j += wait
