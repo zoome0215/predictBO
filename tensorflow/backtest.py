@@ -23,7 +23,7 @@ downparam = -1
 restparam = 0
 
 #############################
-checkQ = True
+checkQ = False
 
 interval = 15 # min 
 betinterval = 5 # min

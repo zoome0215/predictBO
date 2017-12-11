@@ -1,0 +1,2 @@
+model_checkpoint_path: "realuod_15_5_tf"
+all_model_checkpoint_paths: "realuod_15_5_tf"
