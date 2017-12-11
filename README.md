@@ -27,7 +27,16 @@ This will generate a csv files with all the USD/JPY data in an interval of 1 sec
 (note that the linear extrapolation is taken for missing data points).
 
 ## Making AI
+Go to tensorflow folder,
+and run `makeAI-tf.py`. make sure to turn `cont_learn` to `= False` at line `23` if you are running it for the first time.
 
+Once `saved!` is displayed on a terminal (the command window), run `backtest.py` and see how it goes.
+tweak `checkQ` to be `= True` to see how Q-values changes over transactions as a graph.
+
+you need to have this trained at least 100,000 times to see a good progress (still not enough, I think). 
+
+Enjoy.
+# sklearn version is obsolete. 
 run 
 `make-AI-skl.py` this will create a base AI
 then run
@@ -35,4 +44,5 @@ then run
 then run
 `backtest.py` to conduct backtesting.
 
-Enjoy.
+
+## Note
