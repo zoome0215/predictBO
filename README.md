@@ -60,7 +60,6 @@ then run
 ## Donation
 If you cna't technically contribute but want to help, please send some bitcoins to
 
-1NY45VvT5JjNfDMYMw2wXJ3yfUJ3gSz1ei
 
 Any amount will help my studies, which means more free time, and more time to edit and tryout different techniques.
 
