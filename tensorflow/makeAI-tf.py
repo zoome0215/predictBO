@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = True
+cont_learn = False
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -33,13 +33,13 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 =   8.54080511383e-07
-greed0= 0.513970195817
+lr0 = 0.0001
+greed0= 1.0
 
 lrthresh = 1e-8
 epsthresh = 1.0/15.0
 
-train_year = 2016
+train_years = range(2014,2017)
 Nepochs = 10000
 
 wait = 5 #min
@@ -90,74 +90,75 @@ lastaction = 1
 for e in range(Nepochs):
     if e%100 ==0:
         print 'epoch ', e
-    for month in range(1,13):
-        for i in range(0,1000):
-            datanow.loaddata(train_year,month,i)
-            if (not datanow.exist_data) :
-                break
-            jlim = datanow.size()-(interval+max(betinterval,wait))
-            if jlim > (wait+interval):
-                currepsilon = greed0*np.exp(-numlearns/100000.0)
-                currlr = lr0*np.exp(-numlearns/10000.0)
+    for train_year in train_years:
+        for month in range(1,13):
+            for i in range(0,1000):
+                datanow.loaddata(train_year,month,i)
+                if (not datanow.exist_data) :
+                    break
+                jlim = datanow.size()-(interval+max(betinterval,wait))
+                if jlim > (wait+interval):
+                    currepsilon = greed0*np.exp(-numlearns/100000.0)
+                    currlr = lr0*np.exp(-numlearns/10000.0)
 
-                if currepsilon < epsthresh :
-                    currepsilon = epsthresh
-                if currlr < lrthresh :
-                    currlr = lrthresh
+                    if currepsilon < epsthresh :
+                        currepsilon = epsthresh
+                    if currlr < lrthresh :
+                        currlr = lrthresh
 
-                learner.set_epsilon(currepsilon)
-                learner.set_lr(currlr)
-                numdata+=jlim
+                    learner.set_epsilon(currepsilon)
+                    learner.set_lr(currlr)
+                    numdata+=jlim
 
-                j=0
-                while j < jlim :
-                    datnowall = datanow.get(j,interval+max(betinterval,wait))
-                    state = datnowall[:interval]
-                    diff_io = state[-1]-datnowall[interval+betinterval-1]
-                    state = data_util.scaling(state)
-                    action = learner.select_action(state, learner.exploration)
-                    reward = data_util.calcreward(action,diff_io,bet,gain,loss)
+                    j=0
+                    while j < jlim :
+                        datnowall = datanow.get(j,interval+max(betinterval,wait))
+                        state = datnowall[:interval]
+                        diff_io = state[-1]-datnowall[interval+betinterval-1]
+                        state = data_util.scaling(state)
+                        action = learner.select_action(state, learner.exploration)
+                        reward = data_util.calcreward(action,diff_io,bet,gain,loss)
 
-                    if action == 0:
-                        statenext = datnowall[1:interval+1]
-                    else :
-                        statenext = datnowall[wait:(interval+wait)]
+                        if action == 0:
+                            statenext = datnowall[1:interval+1]
+                        else :
+                            statenext = datnowall[wait:(interval+wait)]
 
-                    if (lastaction == 0) and (action == 0) :
-                        actioncounter += 1
-                    else :
-                        actioncounter = 0
+                        if (lastaction == 0) and (action == 0) :
+                            actioncounter += 1
+                        else :
+                            actioncounter = 0
 
-                    if actioncounter > (10*60/2) :
-                        actioncounter = 0
-                        reward =  -((payrate-1)*(periodint*bet*target_rate)/2.0)
-
-
-                    moneynow+= reward
-
-                    if moneynow < 0:
-                        terminal=True
-                        moneynow = initmoney
-                    else :
-                        terminal=False
-
-                    statenext = data_util.scaling(statenext)
-                    learner.storeexperience(state,action,reward,statenext,terminal)
-
-                    if (numtrials%(60*60*1/periodint)) == 0:
-                        learner.experience_replay()
-                        numlearns+= 1
+                        if actioncounter > (10*60/2) :
+                            actioncounter = 0
+                            reward =  -((payrate-1)*(periodint*bet*target_rate)/2.0)
 
 
-                    if action == 0:
-                        j+= 1
-                    else :
-                        j+=wait
+                        moneynow+= reward
 
-                    numtrials += 1
+                        if moneynow < 0:
+                            terminal=True
+                            moneynow = initmoney
+                        else :
+                            terminal=False
 
-                    lastaction = action
+                        statenext = data_util.scaling(statenext)
+                        learner.storeexperience(state,action,reward,statenext,terminal)
 
-        print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
-                'and lr =', currlr
-        learner.savemodel()
+                        if (numtrials%(60*60*1/periodint)) == 0:
+                            learner.experience_replay()
+                            numlearns+= 1
+
+
+                        if action == 0:
+                            j+= 1
+                        else :
+                            j+=wait
+
+                        numtrials += 1
+
+                        lastaction = action
+
+            print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
+                    'and lr =', currlr
+            learner.savemodel()

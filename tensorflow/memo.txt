@@ -2,3 +2,4 @@ laptop log
 #stopped at 16000 
 #stopped at 8000 
 #stopped at 21472  accumulated to  45000
+#stopped at 136386 accumulated to 181,386
