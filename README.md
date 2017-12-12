@@ -24,7 +24,7 @@ Go to
 
 `http://www.histdata.com/download-free-forex-historical-data/?/ninjatrader/tick-last-quotes/usdjpy/`
 
-Download the zip files for all the month from January of 2015 up to now, extract, and put the csv files in 
+Download the zip files for all the month from January of 2014 up to now, extract, and put the csv files in 
 
 `./data/tickdata/rawdata/`
 
