@@ -23,7 +23,7 @@ downparam = -1
 restparam = 0
 
 #############################
-checkQ = False
+checkQ = True
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -50,7 +50,7 @@ gain = bet*(payrate-1)
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
-print 'making AI...'
+print 'loading AI...'
 
 #Converting the intervals to array length
 interval = int(interval*60/periodint)
@@ -74,7 +74,7 @@ numTAs = 0
 
 Qchecked = False
 count = 0
-countthresh = 5
+countthresh = 6
 
 Qvals=[]
 for month in range(1,2):

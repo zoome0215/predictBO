@@ -47,6 +47,7 @@ tweak `checkQ` to be `= True` to see how Q-values changes over transactions as a
 you need to have this trained at least 100,000 times to see a good progress (still not enough, I think). 
 
 Enjoy.
+
 ### sklearn version is obsolete. 
 run 
 `make-AI-skl.py` this will create a base AI

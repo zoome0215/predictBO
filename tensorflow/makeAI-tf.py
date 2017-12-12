@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = False
+cont_learn = True
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -37,7 +37,7 @@ lr0 =   8.54080511383e-07
 greed0= 0.513970195817
 
 lrthresh = 1e-8
-epsthresh = 0.1
+epsthresh = 1.0/15.0
 
 train_year = 2016
 Nepochs = 10000
