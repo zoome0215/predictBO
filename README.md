@@ -58,8 +58,9 @@ then run
 
 
 ## Donation
-If you cna't technically contribute but want to help, please send some bitcoins to
+If you can't technically contribute but want to help, please send some bitcoins to
 
+1Pkgq7gQL7RhFbB5WEumCJ8iT8QNqkTAi2
 
 Any amount will help my studies, which means more free time, and more time to edit and tryout different techniques.
 
