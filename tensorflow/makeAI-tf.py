@@ -158,6 +158,6 @@ for e in range(Nepochs):
 
                     lastaction = action
 
-                print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
-                        'and lr =', currlr
+        print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
+                'and lr =', currlr
         learner.savemodel()
