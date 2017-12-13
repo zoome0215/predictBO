@@ -40,25 +40,37 @@ class learn:
 
         #convoluion
         convlen1 = int(10*60/2)
-        W_C1 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen1,1,self.numfilter1], stddev=0.01),int(convlen1/10),padding="VALID")
-        b_C1 = tf.Variable(tf.truncated_normal([self.numfilter1], stddev=0.01))
-        h_C1 = tf.nn.tanh( W_C1 + b_C1)
+        h_C1 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen1,1,self.numfilter1], stddev=0.01),int(convlen1/10),padding="VALID")
+        shape_tmp = h_C1.shape
+        secondd_1 = int(shape_tmp[1]*shape_tmp[2])
+        h_C1 = tf.reshape(h_C1,shape=[-1,secondd_1,1])
+        h_C1 = tf.nn.conv1d(h_C1,tf.truncated_normal(shape=[int(convlen1/2),1,self.numfilter1], stddev=0.01), \
+                int(convlen1/20),padding="VALID")
 
         #convoluion
         convlen2 = int(5*60/2)
-        W_C2 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen2,1,self.numfilter2], stddev=0.01),int(convlen2/10),padding="VALID")
-        b_C2 = tf.Variable(tf.truncated_normal([self.numfilter2], stddev=0.01))
-        h_C2 = tf.nn.tanh( W_C2 + b_C2)
+        h_C2 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen2,1,self.numfilter2], stddev=0.01),int(convlen2/10),padding="VALID")
+        shape_tmp = h_C2.shape
+        secondd_2 = int(shape_tmp[1]*shape_tmp[2])
+        h_C2 = tf.reshape(h_C2,shape=[-1,secondd_2,1])
+        h_C2 = tf.nn.conv1d(h_C2,tf.truncated_normal(shape=[int(convlen2/2),1,self.numfilter1], stddev=0.01), \
+                int(convlen2/20),padding="VALID")
 
         convlen3 = int(1*60/2)
-        W_C3 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen3,1,self.numfilter3], stddev=0.01),int(convlen3/10),padding="VALID")
-        b_C3 = tf.Variable(tf.truncated_normal([self.numfilter3], stddev=0.01))
-        h_C3 = tf.nn.tanh( W_C3 + b_C3)
+        h_C3 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen3,1,self.numfilter3], stddev=0.01),int(convlen3/10),padding="VALID")
+        shape_tmp = h_C3.shape
+        secondd_3 = int(shape_tmp[1]*shape_tmp[2])
+        h_C3 = tf.reshape(h_C3,shape=[-1,secondd_3,1])
+        h_C3 = tf.nn.conv1d(h_C3,tf.truncated_normal(shape=[int(convlen3/2),1,self.numfilter3], stddev=0.01), \
+                int(convlen3/20),padding="VALID")
 
         convlen4 = int(0.5*60/2)
-        W_C4 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen4,1,self.numfilter4], stddev=0.01),2,padding="VALID")
-        b_C4 = tf.Variable(tf.truncated_normal([self.numfilter4], stddev=0.01))
-        h_C4 = tf.nn.tanh( W_C4 + b_C4)
+        h_C4 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen4,1,self.numfilter4], stddev=0.01),2,padding="VALID")
+        shape_tmp = h_C4.shape
+        secondd_4 = int(shape_tmp[1]*shape_tmp[2])
+        h_C4 = tf.reshape(h_C4,shape=[-1,secondd_4,1])
+        h_C4 = tf.nn.conv1d(h_C4,tf.truncated_normal(shape=[int(convlen4/2),1,self.numfilter4], stddev=0.01), \
+                int(convlen4/10),padding="VALID")
 
         #Merge raw with C1
         shape_tmp = h_C1.shape
@@ -92,7 +104,7 @@ class learn:
 
         W_Cm = tf.nn.conv1d(reshape_tmp,tf.truncated_normal(shape=[convlenm,1,numfilterm], stddev=0.01),10,padding="VALID")
         b_Cm = tf.Variable(tf.truncated_normal([numfilterm], stddev=0.01))
-        h_Cm = tf.nn.tanh( W_C4 + b_C4)
+        h_Cm = tf.nn.tanh( W_Cm + b_Cm)
 
         shape_tmp = h_Cm.shape
         secondd_m = int(shape_tmp[1]*shape_tmp[2])

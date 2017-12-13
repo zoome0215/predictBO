@@ -74,7 +74,7 @@ numTAs = 0
 
 Qchecked = False
 count = 0
-countthresh = 6
+countthresh = 7
 
 Qvals=[]
 for month in range(1,2):
@@ -83,7 +83,7 @@ for month in range(1,2):
         if (not datanow.exist_data) :
             break
         jlim = datanow.size()-(interval+betinterval)
-        if jlim >(wait+interval) :
+        if jlim > (wait+interval) :
             j=0
             numchances += jlim
 
