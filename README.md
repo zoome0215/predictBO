@@ -20,7 +20,7 @@ I'm a python noob, so I don't know when it will be. It would be nice if I can ma
 
 # TO DO
 
-*Add target network.
+*Add target network.  
 *Implimentation of RMSPropGraves
 
 # How to use
