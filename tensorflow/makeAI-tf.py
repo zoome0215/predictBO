@@ -46,7 +46,7 @@ wait = 5 #min
 
 possibleactions = (downparam,restparam,upparam)
 #weightactions = np.array([0.2,0.6,0.2])
-weightactions = np.array([0.4,0.2,0.4])
+weightactions = np.array([1/3,1/3,1/3])
 
 if betinterval < 10 :
     payrate = 1.85
@@ -84,8 +84,6 @@ numtrials = 0
 numlearns = 0
 
 moneynow=initmoney
-actioncount = 0
-lastaction = 1
 
 for e in range(Nepochs):
     if e%100 ==0:
@@ -124,16 +122,6 @@ for e in range(Nepochs):
                         else :
                             statenext = datnowall[wait:(interval+wait)]
 
-                        if (lastaction == 0) and (action == 0) :
-                            actioncounter += 1
-                        else :
-                            actioncounter = 0
-
-                        if actioncounter > (10*60/2) :
-                            actioncounter = 0
-                            reward =  -((payrate-1)*(periodint*bet*target_rate)/2.0)
-
-
                         moneynow+= reward
 
                         if moneynow < 0:
@@ -161,4 +149,4 @@ for e in range(Nepochs):
 
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
                     'and lr =', currlr
-            #learner.savemodel()
+            learner.savemodel()
