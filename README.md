@@ -18,6 +18,11 @@ This is not for beginners because I'm not expert enough to make it a beginner fr
 It requires `python 2.7` and packages that can be installed with `pip` (I'll make an official list). 
 I'm a python noob, so I don't know when it will be. It would be nice if I can make some `setup.py`.
 
+# TO DO
+
+*Add target network.
+*Implimentation of RMSPropGraves
+
 # How to use
 
 ## Shaping data
