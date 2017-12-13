@@ -10,10 +10,12 @@ I have no responsibility on any of the consequences arising from modifying,runni
 There is nothing amazing happening right now. It is under development, and there is no actual profits or real-time signaling properties
 so far. It will happen.
 
-There is no GUI cuz I have no idea how to do that.
+There is no GUI because I have no idea how to do that.
+
+This is not for beginners because I'm not expert enough to make it a beginner friendly... I'm so sorry...
 
 # Dependencies
-`python 2.7` and packages that can be installed with `pip` (I'll make an official list). 
+It requires `python 2.7` and packages that can be installed with `pip` (I'll make an official list). 
 I'm a python noob, so I don't know when it will be. It would be nice if I can make some `setup.py`.
 
 # How to use
