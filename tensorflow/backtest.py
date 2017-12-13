@@ -74,7 +74,7 @@ numTAs = 0
 
 Qchecked = False
 count = 0
-countthresh = 7
+countthresh = 6
 
 Qvals=[]
 for month in range(1,2):
