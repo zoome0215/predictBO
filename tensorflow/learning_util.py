@@ -156,3 +156,9 @@ class learn:
 
     def loadtargetmodel(self) :
         self.saver.restore(self.sess_target, self.outname_target)
+
+    def saveall(self):
+        self.savemodel()
+        self.savetargetmodel()
+        self.loadtargetmodel()
+        print 'models saved and target loaded'
