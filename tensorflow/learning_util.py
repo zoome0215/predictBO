@@ -89,8 +89,10 @@ class learn:
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
 
+        ##################################################
         # target session
         self.sess_target = tf.Session()
+        self.sess_target.run(tf.global_variables_initializer())
 
     def storeexperience(self, state_in, action_in, reward_in, statenext_in,terminal_in):
         self.D.append((state_in, action_in, reward_in,statenext_in,terminal_in))
@@ -107,13 +109,13 @@ class learn:
             state_j, action_j, reward_j, state_jp1, terminal = self.D[j]
             action_j_index = self.possibleactions.index(action_j)
 
-            y_j = self.Q_values(state_j)
+            y_j = self.Q_values_target(state_j)
 
             if terminal:
                 y_j[action_j_index] = reward_j
             else :
                 # reward_j + gamma * max_action' Q(state', action')
-                y_j[action_j_index] = reward_j + self.discount_factor * np.max(self.Q_values(state_jp1))
+                y_j[action_j_index] = reward_j + self.discount_factor * np.max(self.Q_values_target(state_jp1))
 
             state_minibatch.append(state_j)
             y_minibatch.append(y_j)
@@ -123,6 +125,9 @@ class learn:
 
     def Q_values(self, state):
         return self.sess.run(self.y, feed_dict={self.x: [state]})[0]
+
+    def Q_values_target(self, state):
+        return self.sess_target.run(self.y, feed_dict={self.x: [state]})[0]
 
     def set_epsilon(self, epsilon):
         self.exploratio = epsilon
@@ -142,14 +147,12 @@ class learn:
 
     def savemodel(self):
         self.saver.save(self.sess, self.outname)
-        print 'model saved!'
 
     def savetargetmodel(self):
-        self.saver.save(self.sess_target, self.outname_target)
-        print 'target model saved!'
+        self.saver.save(self.sess, self.outname_target)
 
     def loadmodel(self) :
         self.saver.restore(self.sess, self.outname)
 
     def loadtargetmodel(self) :
-        self.saver.restore(self.sess_target, self.outname)
+        self.saver.restore(self.sess_target, self.outname_target)

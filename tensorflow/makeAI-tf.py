@@ -65,7 +65,7 @@ betinterval = int(betinterval*60/periodint)
 wait = int(wait*60/2)
 
 #making AI
-outdir  = '../AI/tf/'
+outdir  = '../AI/tf_tmp/'
 outname = outdir+outname
 
 learner = learning_util.learn(outname,possibleactions,weightactions,interval)
@@ -145,10 +145,8 @@ for e in range(Nepochs):
 
                         numtrials += 1
 
-                        lastaction = action
-
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
                     'and lr =', currlr
-            learner.savemodel()
-            learner.savetargetmodel()
-            learner.loadtargetmodel()
+        learner.savemodel()
+        learner.savetargetmodel()
+        learner.loadtargetmodel()
