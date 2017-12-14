@@ -1,5 +1,0 @@
-laptop log
-#stopped at 16,000 
-#stopped at 8,000 
-#stopped at 21,472  accumulated to  45000
-#stopped at 136,386 accumulated to 181,386

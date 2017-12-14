@@ -19,7 +19,7 @@ It requires `python 2.7` and packages that can be installed with `pip` (I'll mak
 I'm a python noob, so I don't know when it will be. It would be nice if I can make some `setup.py`.
 
 # TO DO
-*Implimentation of RMSPropGraves
++Implimentation of RMSPropGraves <- This will never happen.
 
 # How to use
 
