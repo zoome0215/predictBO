@@ -141,4 +141,3 @@ for e in range(Nepochs):
 
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon
         learner.saveall()
-
