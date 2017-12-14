@@ -9,6 +9,7 @@ import os, os.path
 class learn:
     def __init__(self,outputname,possibleactions,weightactions,interval):
         self.outname = outputname
+        self.outname_target = outputname+"_target"
         self.possibleactions = possibleactions
         self.numactions = len(possibleactions)
         self.weightactions = weightactions
@@ -75,7 +76,7 @@ class learn:
 
         #loss
         self.y_ = tf.placeholder(tf.float32, [None, self.numactions])
-        self.loss = tf.reduce_mean(tf.square(self.y_ - self.y))
+        self. loss = tf.losses.huber_loss(self.y_, self.y)
 
         # train operation
         optimizer = tf.train.RMSPropOptimizer(self.learning_rate)
@@ -87,6 +88,9 @@ class learn:
         # session
         self.sess = tf.Session()
         self.sess.run(tf.global_variables_initializer())
+
+        # target session
+        self.sess_target = tf.Session()
 
     def storeexperience(self, state_in, action_in, reward_in, statenext_in,terminal_in):
         self.D.append((state_in, action_in, reward_in,statenext_in,terminal_in))
@@ -135,8 +139,17 @@ class learn:
     def select_action_norandom(self, state):
         return self.possibleactions[np.argmax(self.Q_values(state))]
 
-    def loadmodel(self) :
-        self.saver.restore(self.sess, self.outname)
+
     def savemodel(self):
         self.saver.save(self.sess, self.outname)
-        print 'saved!'
+        print 'model saved!'
+
+    def savetargetmodel(self):
+        self.saver.save(self.sess_target, self.outname_target)
+        print 'target model saved!'
+
+    def loadmodel(self) :
+        self.saver.restore(self.sess, self.outname)
+
+    def loadtargetmodel(self) :
+        self.saver.restore(self.sess_target, self.outname)
