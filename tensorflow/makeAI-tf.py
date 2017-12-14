@@ -65,7 +65,7 @@ betinterval = int(betinterval*60/periodint)
 wait = int(wait*60/2)
 
 #making AI
-outdir  = '../AI/tf_tmp/'
+outdir  = '../AI/tf/'
 outname = outdir+outname
 
 learner = learning_util.learn(outname,possibleactions,weightactions,interval)

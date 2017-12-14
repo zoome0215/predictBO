@@ -58,7 +58,7 @@ betinterval = int(betinterval*60/periodint)
 wait = int(wait*60/periodint)
 
 #making AI
-outdir  = '../AI/tf_tmp/'
+outdir  = '../AI/tf/'
 outname = outdir+outname
 
 
