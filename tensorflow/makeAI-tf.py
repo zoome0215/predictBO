@@ -130,7 +130,7 @@ for e in range(Nepochs):
                         statenext = data_util.scaling(statenext)
                         learner.storeexperience(state,action,reward,statenext,terminal)
 
-                        if (numtrials%(60*60*1/periodint)) == 0:
+                        if (numtrials%(60*60*5/periodint)) == 0:
                             learner.experience_replay()
                             numlearns+= 1
 
