@@ -41,12 +41,12 @@ def scaling(vec):
 
     return ((vec-mu)/std)
 
-def calcreward(actionnow, diff_io,bet,gain,loss):
+def calcreward(actionnow, diff_io,bet,gain):
     upparam = 1
     downparam = -1
     restparam = 0
     if actionnow == restparam:
-        return -loss
+        return 0.0
     else:
         if actionnow == upparam:
             if diff_io > 0 :
@@ -59,7 +59,7 @@ def calcreward(actionnow, diff_io,bet,gain,loss):
             else :
                 return -bet
         else :
-            return 0
+            return 0.0
 
 def calcreward_bt(actionnow,diff_io,bet,gain):
     upparam = 1

@@ -33,7 +33,7 @@ payrate=2
 initmoney = 200
 bet = 20
 
-lr0 = 0.0001
+lr0 = 0.000001
 greed0= 1.0
 
 lrthresh = 1e-8
@@ -52,12 +52,9 @@ if betinterval < 10 :
     payrate = 1.85
 
 gain = bet*(payrate-1)
-#loss = (payrate-1)*(periodint*bet*target_rate/(60.0*60.0))/2.0
-loss=0.0
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
-print 'loss is', loss
 
 #Converting the intervals to array length
 interval = int(interval*60/periodint)
@@ -69,6 +66,7 @@ outdir  = '../AI/tf/'
 outname = outdir+outname
 
 learner = learning_util.learn(outname,possibleactions,weightactions,interval)
+learner.set_lr(lr0)
 
 #load data
 datanow = data_util.tradedata()
@@ -97,15 +95,12 @@ for e in range(Nepochs):
                 jlim = datanow.size()-(interval+max(betinterval,wait))
                 if jlim > (wait+interval):
                     currepsilon = greed0*np.exp(-numlearns/100000.0)
-                    currlr = lr0*np.exp(-numlearns/10000.0)
 
                     if currepsilon < epsthresh :
                         currepsilon = epsthresh
-                    if currlr < lrthresh :
-                        currlr = lrthresh
 
                     learner.set_epsilon(currepsilon)
-                    learner.set_lr(currlr)
+
                     numdata+=jlim
 
                     j=0
@@ -115,7 +110,7 @@ for e in range(Nepochs):
                         diff_io = state[-1]-datnowall[interval+betinterval-1]
                         state = data_util.scaling(state)
                         action = learner.select_action(state, learner.exploration)
-                        reward = data_util.calcreward(action,diff_io,bet,gain,loss)
+                        reward = data_util.calcreward(action,diff_io,bet,gain)
 
                         if action == 0:
                             statenext = datnowall[1:interval+1]
@@ -145,6 +140,6 @@ for e in range(Nepochs):
 
                         numtrials += 1
 
-            print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon, \
-                    'and lr =', currlr
+            print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon
         learner.saveall()
+

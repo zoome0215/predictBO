@@ -20,7 +20,9 @@ class learn:
 
         self.veclen = interval
         self.num_1stlayer = int(interval/2)
+
         self.learning_rate = 0.01
+
         self.discount_factor = 0.9
         self.exploration = 0.1
 
@@ -134,7 +136,7 @@ class learn:
 
     def set_lr(self, lr):
         self.learning_rate = lr
-            
+
     def select_action(self, state, epsilon):
         if np.random.rand() <= epsilon:
             return np.random.choice(self.possibleactions,p=self.weightactions)
