@@ -62,7 +62,7 @@ outdir  = '../AI/tf/'
 outname = outdir+outname
 
 
-learner = learning_util.learn(outname,possibleactions,weightactions,interval)
+learner = learning_util.learn(outname,0.001,possibleactions,weightactions,interval)
 learner.loadmodel()
 
 #load data
