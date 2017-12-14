@@ -65,8 +65,7 @@ wait = int(wait*60/2)
 outdir  = '../AI/tf/'
 outname = outdir+outname
 
-learner = learning_util.learn(outname,possibleactions,weightactions,interval)
-learner.set_lr(lr0)
+learner = learning_util.learn(outname,lr0,possibleactions,weightactions,interval)
 
 #load data
 datanow = data_util.tradedata()

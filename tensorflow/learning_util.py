@@ -7,7 +7,7 @@ import tensorflow as tf
 import os, os.path
 
 class learn:
-    def __init__(self,outputname,possibleactions,weightactions,interval):
+    def __init__(self,outputname,learning_rate,possibleactions,weightactions,interval):
         self.outname = outputname
         self.outname_target = outputname+"_target"
         self.possibleactions = possibleactions
@@ -21,7 +21,7 @@ class learn:
         self.veclen = interval
         self.num_1stlayer = int(interval/2)
 
-        self.learning_rate = 0.01
+        self.learning_rate = learning_rate
 
         self.discount_factor = 0.9
         self.exploration = 0.1
