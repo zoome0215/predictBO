@@ -21,6 +21,12 @@ I'm a python noob, so I don't know when it will be. It would be nice if I can ma
 # TO DO
 +Implimentation of RMSPropGraves <- This will never happen.
 
+# Note
+
+Please report any issues or questions on `issues` tab, so that I can ask all the questions at once, 
+and your question might already be answered there.
+
+
 # How to use
 
 ## Shaping data
