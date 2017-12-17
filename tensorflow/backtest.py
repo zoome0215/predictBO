@@ -40,6 +40,8 @@ test_year = 2017
 
 wait = 5 #min
 
+countthresh = 5
+
 possibleactions = (downparam,restparam,upparam)
 weightactions = np.array([0.2,0.6,0.2])
 
@@ -74,8 +76,6 @@ numTAs = 0
 
 Qchecked = False
 count = 0
-countthresh = 5
-
 Qvals=[]
 for month in range(1,2):
     for i in range(0,1000):
@@ -93,18 +93,20 @@ for month in range(1,2):
                 state = datnowall[:interval]
                 diff_io=state[-1]-datnowall[-1]
                 state = data_util.scaling(state)
-
                 action = learner.select_action_norandom(state)
+
+                Qnow = max(learner.Q_values(state))
                 if checkQ :
                     Qvals.append(learner.Q_values(state))
                 reward = data_util.calcreward(action,diff_io,bet,gain)
-                moneynow+= reward
-
-                if action != 0:
+                if (action != 0) and (Qnow > 10):
                     numTAs += 1
                     j += wait
+                    moneynow+= reward
                 else:
                     j+= 1
+                    moneynow+= 0.0
+
                 if moneynow < 0:
                     print 'money became negative'
                     print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
