@@ -98,14 +98,15 @@ for month in range(1,2):
                 Qnow = max(learner.Q_values(state))
                 if checkQ :
                     Qvals.append(learner.Q_values(state))
+
                 reward = data_util.calcreward(action,diff_io,bet,gain)
-                if (action != 0) and (Qnow > 10):
+                moneynow+= reward
+
+                if action != 0 :
                     numTAs += 1
                     j += wait
-                    moneynow+= reward
                 else:
                     j+= 1
-                    moneynow+= 0.0
 
                 if moneynow < 0:
                     print 'money became negative'
