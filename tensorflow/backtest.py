@@ -97,7 +97,7 @@ for month in range(1,2):
                 action = learner.select_action_norandom(state)
                 if checkQ :
                     Qvals.append(learner.Q_values(state))
-                reward = data_util.calcreward_bt(action,diff_io,bet,gain)
+                reward = data_util.calcreward(action,diff_io,bet,gain)
                 moneynow+= reward
 
                 if action != 0:

@@ -60,24 +60,3 @@ def calcreward(actionnow, diff_io,bet,gain):
                 return -bet
         else :
             return 0.0
-
-def calcreward_bt(actionnow,diff_io,bet,gain):
-    upparam = 1
-    downparam = -1
-    restparam = 0
-
-    if actionnow == restparam:
-        return 0
-    else:
-        if actionnow == upparam:
-            if diff_io > 0 :
-                return -bet
-            else :
-                return gain
-        elif actionnow == downparam:
-            if diff_io < 0 :
-                return gain
-            else :
-                return -bet
-        else :
-            return 0
