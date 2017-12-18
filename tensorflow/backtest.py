@@ -8,9 +8,6 @@ import time
 from datetime import datetime
 import pickle
 
-#graphing
-import matplotlib.pyplot as plt
-
 #own python dependencies
 import data_util
 import learning_util
