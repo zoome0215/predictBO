@@ -39,6 +39,8 @@ greed0= 1.0
 lrthresh = 1e-8
 epsthresh = 1.0/15.0
 
+gamma_epsilon = 100000.0 #Decay rate : epsilon = greed0 * exp(- numlearns / gamma_epsilon)
+
 train_years = range(2014,2017)
 Nepochs = 10000
 
@@ -93,7 +95,7 @@ for e in range(Nepochs):
                     break
                 jlim = datanow.size()-(interval+max(betinterval,wait))
                 if jlim > (wait+interval):
-                    currepsilon = greed0*np.exp(-numlearns/100000.0)
+                    currepsilon = greed0*np.exp(-numlearns/gamma_epsilon)
 
                     if currepsilon < epsthresh :
                         currepsilon = epsthresh
