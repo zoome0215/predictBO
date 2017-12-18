@@ -126,6 +126,7 @@ for month in range(1,2):
             if Qchecked :
                 Qvals = np.array(Qvals)
                 Qvals = np.squeeze(Qvals)
+                plt.figure()
                 plt.plot(range(0,Qvals.shape[0]),Qvals[:,0],label='down')
                 plt.plot(range(0,Qvals.shape[0]),Qvals[:,1],label='stay')
                 plt.plot(range(0,Qvals.shape[0]),Qvals[:,2],label='up')
