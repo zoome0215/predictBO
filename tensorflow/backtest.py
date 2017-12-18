@@ -128,5 +128,5 @@ for month in range(1,2):
                 plt.plot(range(0,Qvals.shape[0]),Qvals[:,1],label='stay')
                 plt.plot(range(0,Qvals.shape[0]),Qvals[:,2],label='up')
                 plt.legend()
-                plt.show()
+                plt.savefig('machine_16GB_qvals.eps')
                 sys.exit(0)
