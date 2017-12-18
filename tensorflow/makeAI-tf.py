@@ -142,4 +142,5 @@ for e in range(Nepochs):
                         numtrials += 1
 
         print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon
+        sys.stdout.flush()
     learner.saveall()
