@@ -40,32 +40,36 @@ class learn:
         #convoluion
         convlen1 = int(10*60/2)
         numfilter1 = 64
-        h_C1 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen1,1,numfilter1], stddev=0.01),5,padding="VALID")
+        C_C1 = tf.nn.conv1d(x_,tf.truncated_normal(shape=[convlen1,1,numfilter1], stddev=0.01),5,padding="VALID")
+        C_C_r = tf.reshape(C_C1,shape=[-1,int(C_C1.shape[1]*C_C1.shape[2])])
+        b_C1 = tf.Variable(tf.constant(0.01,shape=[int(C_C_r.shape[1])]))
+        h_C1 = tf.nn.tanh(C_C_r + b_C1)
 
         shape_tmp = h_C1.shape
-        secondd = int(shape_tmp[1]*shape_tmp[2])
+        secondd = int(shape_tmp[1])
         reshape_tmp = tf.reshape(h_C1,shape=[-1,secondd,1])
 
         convlen2 = 128
         numfilter2 = 32
-        h_C2 = tf.nn.conv1d(reshape_tmp,tf.truncated_normal(shape=[convlen2,1,numfilter2], stddev=0.01), \
+        C_C2 = tf.nn.conv1d(reshape_tmp,tf.truncated_normal(shape=[convlen2,1,numfilter2], stddev=0.01), \
                 64,padding="VALID")
-
+        C_C_r = tf.reshape(C_C2,shape=[-1,int(C_C2.shape[1]*C_C2.shape[2])])
+        b_C2 = tf.Variable(tf.constant(0.01,shape=[int(C_C_r.shape[1])]))
+        h_C2 = tf.nn.tanh(C_C_r + b_C2)
 
         shape_tmp = h_C2.shape
-        secondd = int(shape_tmp[1]*shape_tmp[2])
+        secondd = int(shape_tmp[1])
         reshape_tmp = tf.reshape(h_C2,shape=[-1,secondd,1])
 
         convlen3 = 64
         numfilter3 = 16
-        h_C3 = tf.nn.conv1d(reshape_tmp,tf.truncated_normal(shape=[convlen3,1,numfilter3], stddev=0.01), \
+        C_C3 = tf.nn.conv1d(reshape_tmp,tf.truncated_normal(shape=[convlen3,1,numfilter3], stddev=0.01), \
                 64,padding="VALID")
+        C_C_r = tf.reshape(C_C3,shape=[-1,int(C_C3.shape[1]*C_C3.shape[2])])
+        b_C3 = tf.Variable(tf.constant(0.01,shape=[int(C_C_r.shape[1])]))
+        h_C3 = tf.nn.tanh(C_C_r + b_C3)
 
-        shape_tmp = h_C3.shape
-        secondd = int(shape_tmp[1]*shape_tmp[2])
-        reshape_tmp = tf.reshape(h_C3,shape=[-1,secondd])
-
-        all_in = tf.concat([reshape_tmp,h_fc1],axis=1)
+        all_in = tf.concat([h_C3,h_fc1],axis=1)
 
         W_A1 = tf.Variable(tf.truncated_normal([int(all_in.shape[1]),1024], stddev=0.01))
         b_A1 = tf.Variable(tf.constant(0.01,shape=[1024]))

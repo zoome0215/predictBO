@@ -40,7 +40,7 @@ test_year = 2017
 
 wait = 5 #min
 
-countthresh = 5
+countthresh = 4
 
 possibleactions = (downparam,restparam,upparam)
 weightactions = np.array([0.2,0.6,0.2])
