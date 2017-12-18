@@ -16,6 +16,8 @@ import data_util
 import learning_util
 
 #plotting
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 upparam = 1
