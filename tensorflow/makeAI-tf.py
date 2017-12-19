@@ -123,6 +123,9 @@ for e in range(Nepochs):
                         if moneynow < 0:
                             terminal=True
                             moneynow = initmoney
+                        elif moneynow > 300:
+                            terminal=False
+                            moneynow = 200.0
                         else :
                             terminal=False
 
