@@ -87,6 +87,7 @@ moneynow=initmoney
 for e in range(Nepochs):
     if e%100 ==0:
         print 'epoch ', e
+        sys.stdout.flush()
     for train_year in train_years:
         for month in range(1,13):
             for i in range(0,1000):
@@ -123,9 +124,9 @@ for e in range(Nepochs):
                         if moneynow < 0:
                             terminal=True
                             moneynow = initmoney
-                        elif moneynow > 300:
+                        elif moneynow > (initmoney*1.5) :
                             terminal=False
-                            moneynow = 200.0
+                            moneynow = initmoney
                         else :
                             terminal=False
 
