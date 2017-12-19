@@ -176,7 +176,7 @@ while qqqq > 0 :
         pred_now = learner.select_action_norandom(input_now)
 
         if (((j-lastbet)*periodint >= waittime)  and ( (pred_now== upparam ) | (pred_now == downparam)) ):
-            print 'Chance!! AI predicted value is', pred_before, \
+            print 'Chance!! AI predicted value is', pred_now, \
                     'the time is now', datetime.now()
             makebet(pred_now,bet_field,up_button,down_button,bet_button,betamount)
             countTAs += 1
