@@ -82,7 +82,7 @@ interval = 15 #mins
 betinterval = 5 #mins
 periodint = 2 #seconds
 maxmin = 60*50
-waittime = 120 # in seocnds
+waittime = 60*5 # in seocnds
 
 betamount = 20
 
