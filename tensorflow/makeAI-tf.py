@@ -42,7 +42,7 @@ epsthresh = 1.0/15.0
 gamma_epsilon = 100000.0 #Decay rate : epsilon = greed0 * exp(- numlearns / gamma_epsilon)
 
 train_years = range(2014,2017)
-Nepochs = 10000
+Nepochs = 100000000000
 
 wait = 5 #min
 
@@ -147,4 +147,6 @@ for e in range(Nepochs):
 
         print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon
         sys.stdout.flush()
-    learner.saveall()
+
+    if e%2 == 0:
+        learner.saveall()
