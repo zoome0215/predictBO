@@ -84,7 +84,7 @@ numlearns = 0
 
 moneynow=initmoney
 
-for e in range(Nepochs):
+while e < Nepochs:
     if e%100 ==0:
         print 'epoch ', e
         sys.stdout.flush()
@@ -150,3 +150,4 @@ for e in range(Nepochs):
 
     if e%2 == 0:
         learner.saveall()
+    e += 1
