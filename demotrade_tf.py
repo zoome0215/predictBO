@@ -171,7 +171,7 @@ while qqqq > 0 :
         val_list = np.append(val_list,currval)
         pred_nows=[]
         input_now = makeinput(interval,periodint,val_list)
-        input_now = input_now.reshape(1,-1)
+        #input_now = input_now.reshape(1,-1)
         input_now = data_util.scaling(input_now)
         pred_now = learner.select_action_norandom(input_now)
 
