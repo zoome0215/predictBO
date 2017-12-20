@@ -75,6 +75,7 @@ datanow = data_util.tradedata()
 if cont_learn:
     print 'AI loaded!'
     learner.loadmodel();
+    learner.loadtargetmodel();
 else:
     print 'Making a new AI!'
 
