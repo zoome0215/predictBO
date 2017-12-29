@@ -18,6 +18,11 @@ This is not for beginners because I'm not expert enough to make it a beginner fr
 It requires `python 2.7` and packages that can be installed with `pip` (I'll make an official list). 
 I'm a python noob, so I don't know when it will be. It would be nice if I can make some `setup.py`.
 
+# Progress
+Currently, training AI on google cloud platform (via virtual machine). numlearns = 46477. Took 10 days.
+
+Please contribute to this project!!!!! I'm currently working all by my self.
+
 # TO DO
 + Implimentation of RMSPropGraves <- This will never happen.
 
