@@ -124,9 +124,9 @@ while e < Nepochs :
                         if moneynow < 0:
                             terminal=True
                             moneynow = initmoney
-                        elif moneynow > 300:
+                        elif moneynow > initmoney:
                             terminal=False
-                            moneynow = 200.0
+                            moneynow = initmoney
                         else :
                             terminal=False
 
