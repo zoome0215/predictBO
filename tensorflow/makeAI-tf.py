@@ -83,6 +83,8 @@ numdata=0
 numtrials = 0
 numlearns = 0
 
+currepsilon=0
+
 moneynow=initmoney
 e = 0
 while e < Nepochs :
