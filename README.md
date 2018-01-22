@@ -62,6 +62,20 @@ tweak `checkQ` to be `= True` to see how Q-values changes over transactions as a
 
 you need to have this trained at least 100,000 times to see a good progress (still not enough, I think). 
 
+## Restart from the saved AI
+Go to tensorflow folder,
+and run `makeAI-tf.py`, but this time make sure to turn `cont_learn` to `= True` at line `23`
+if you want to continue from the AI that is made previously.
+
+## Backtesting
+
+Backtest can be done using `tensorflow/backtest.py`. Just run it and it should output how much you have profitted 
+if you traded in whatever years you specified.
+
+## Trying it on demotrade
+
+You can run `demotrade_tf.py` to test the AI on the real trading website (it is a demo trade from high-low Australia).
+
 Enjoy.
 
 ### sklearn version is obsolete. 
