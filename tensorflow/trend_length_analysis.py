@@ -123,3 +123,9 @@ for month in range(1,2):
                 print 'average down',np.mean(downlengths)
                 print 'average rest',np.mean(restlengths)
                 sys.exit(0)
+
+print 'after', count, 'files:'
+print 'average up',np.mean(uplengths)
+print 'average down',np.mean(downlengths)
+print 'average rest',np.mean(restlengths)
+sys.exit(0)
