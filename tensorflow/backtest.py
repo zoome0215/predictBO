@@ -40,7 +40,7 @@ test_year = 2017
 
 wait = 5 #min
 
-countthresh = 4
+countthresh = 8
 
 possibleactions = (downparam,restparam,upparam)
 weightactions = np.array([0.2,0.6,0.2])
@@ -77,7 +77,7 @@ numTAs = 0
 Qchecked = False
 count = 0
 Qvals=[]
-for month in range(1,2):
+for month in range(1,5):
     for i in range(0,1000):
         datanow.loaddata(test_year,month,i)
         if (not datanow.exist_data) :
