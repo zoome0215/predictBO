@@ -87,8 +87,8 @@ then run
 `backtest.py` to conduct backtesting.
 
 
-## Donation
 <!---
+## Donation
 If you can't technically contribute but want to help, please send some bitcoins to
 Any amount will help my studies, which means more free time, and more time to edit and tryout different techniques.
 --->
