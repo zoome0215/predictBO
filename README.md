@@ -26,7 +26,8 @@ Currently, training AI on google cloud platform (via virtual machine). numlearns
 Please contribute to this project!!!!! I'm currently working all by my self.
 
 # TO DO
-+ Implimentation of RMSPropGraves <- This will never happen.
++ 日本語のドキュメンテーションの作成
++ --Implimentation of RMSPropGraves-- This will never happen.
 
 # Note
 
