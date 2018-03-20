@@ -27,7 +27,7 @@ Please contribute to this project!!!!! I'm currently working all by my self.
 
 # TO DO
 + 日本語のドキュメンテーションの作成
-+ --Implimentation of RMSPropGraves-- This will never happen.
++ ~~Implimentation of RMSPropGraves~~ This will never happen.
 
 # Note
 
