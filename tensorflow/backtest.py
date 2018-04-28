@@ -40,7 +40,7 @@ test_year = 2017
 
 wait = 5 #min
 
-countthresh = 8
+countthresh = 4
 
 possibleactions = (downparam,restparam,upparam)
 weightactions = np.array([0.2,0.6,0.2])
@@ -77,6 +77,7 @@ numTAs = 0
 Qchecked = False
 count = 0
 Qvals=[]
+prof=0
 for month in range(1,5):
     for i in range(0,1000):
         datanow.loaddata(test_year,month,i)
@@ -108,9 +109,15 @@ for month in range(1,5):
                 else:
                     j+= 1
 
+                if moneynow > initmoney:
+                    prof += (moneynow - initmoney)
+                    moneynow = initmoney
+                    
+
                 if moneynow < 0:
                     print 'money became negative'
-                    print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
+                    print test_year, month, i, '$', prof, ', ', numTAs,'transactions, which is', \
+                            numTAs/(numchances/(60*60/2)), \
                         ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
                     sys.exit(0)
 
@@ -119,7 +126,7 @@ for month in range(1,5):
                 if count > countthresh:
                     Qchecked = True
 
-            print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
+            print test_year, month, i, '$', prof, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
                 ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
             if Qchecked :
                 Qvals = np.array(Qvals)

@@ -20,7 +20,7 @@ downparam = -1
 restparam = 0
 
 #############################
-cont_learn = False
+cont_learn = True
 
 interval = 15 # min 
 betinterval = 5 # min
@@ -34,12 +34,12 @@ initmoney = 200
 bet = 20
 
 lr0 = 0.000001
-greed0= 1.0
+greed0=0.368612250163
 
 lrthresh = 1e-8
-epsthresh = 1.0/15.0
+epsthresh = 1.0/1000000
 
-gamma_epsilon = 100000.0 #Decay rate : epsilon = greed0 * exp(- numlearns / gamma_epsilon)
+gamma_epsilon = 10000.0 #Decay rate : epsilon = greed0 * exp(- numlearns / gamma_epsilon)
 
 train_years = range(2014,2017)
 Nepochs = 100000000
@@ -149,5 +149,6 @@ while e < Nepochs :
 
             print train_year,month, i, 'learned', numlearns,'times with epsilon =',currepsilon
         learner.saveall()
+        print 'saved!'
     e += 1
 
