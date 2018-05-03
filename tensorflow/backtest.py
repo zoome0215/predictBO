@@ -41,7 +41,7 @@ test_year = 2017
 wait = 10 #min
 
 countthresh = 10
-Qthresh = 1.25
+Qthresh = 1.4
 
 if countthresh > 5:
     checkQ = False
@@ -110,10 +110,10 @@ for month in range(1,5):
                 if (action != 0):
                     if (Qnow > Qthresh):
                         moneynow += reward
-                        if reward >0 :
-                            print 'success', Qnow
-                        else :
-                            print 'fail', Qnow
+                        #if reward >0 :
+                            #print 'success', Qnow
+                        #else :
+                            #print 'fail', Qnow
                     else :
                         moneynow += 0
                 else :
