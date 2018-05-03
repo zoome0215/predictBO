@@ -1,0 +1,8 @@
+Tested on 2018-05-03 01:46:28.031651
+interval of  15  min
+Qthresh = 1.11
+loading AI...
+
+2017 1 36 $ 197.0 ,  2 transactions, which is 2.05245153934  bets per hour over 0.974444444444 hours
+...
+2017 4 95 $ 2170.0 ,  598 transactions, which is 0.392794820538  bets per hour over 1522.42333333 hours
