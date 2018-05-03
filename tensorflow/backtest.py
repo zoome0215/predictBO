@@ -38,9 +38,13 @@ bet = 20
 
 test_year = 2017
 
-wait = 5 #min
+wait = 10 #min
 
-countthresh = 4
+countthresh = 10
+Qthresh = 1.25
+
+if countthresh > 5:
+    checkQ = False
 
 possibleactions = (downparam,restparam,upparam)
 weightactions = np.array([0.2,0.6,0.2])
@@ -52,6 +56,8 @@ gain = bet*(payrate-1)
 
 print 'tested on', datetime.today()
 print 'interval of ' , interval ,' min'
+print 'Qthresh =',Qthresh
+
 print 'loading AI...'
 
 #Converting the intervals to array length
@@ -101,9 +107,19 @@ for month in range(1,5):
                     Qvals.append(learner.Q_values(state))
 
                 reward = data_util.calcreward(action,diff_io,bet,gain)
-                moneynow+= reward
+                if (action != 0):
+                    if (Qnow > Qthresh):
+                        moneynow += reward
+                        if reward >0 :
+                            print 'success', Qnow
+                        else :
+                            print 'fail', Qnow
+                    else :
+                        moneynow += 0
+                else :
+                    moneynow+= reward
 
-                if action != 0 :
+                if (action != 0) and (Qnow > Qthresh):
                     numTAs += 1
                     j += wait
                 else:
@@ -115,18 +131,24 @@ for month in range(1,5):
                     
 
                 if moneynow < 0:
-                    print 'money became negative'
-                    print test_year, month, i, '$', prof, ', ', numTAs,'transactions, which is', \
-                            numTAs/(numchances/(60*60/2)), \
-                        ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
-                    sys.exit(0)
+                    if (prof > initmoney):
+                        moneynow = initmoney
+                        prof = prof-initmoney
+                    else :
+                        print 'money became negative'
+                        print test_year, month, i, '$', prof, ', ', numTAs,'transactions, which is', \
+                                numTAs/(numchances/(60*60/2)), \
+                            ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
+                        print 'Stopped at step', j
+                        sys.exit(0)
 
             if checkQ:
                 count += 1
                 if count > countthresh:
                     Qchecked = True
 
-            print test_year, month, i, '$', prof, ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
+            print test_year, month, i, '$', (moneynow+prof), \
+                    ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
                 ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
             if Qchecked :
                 Qvals = np.array(Qvals)

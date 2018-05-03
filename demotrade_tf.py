@@ -86,7 +86,7 @@ waittime = 60*5 # in seocnds
 
 betamount = 20
 
-fitSVC = 1
+Qthresh = 1.25
 
 AIname = 'realuod_'+str(interval)+'_'+str(betinterval)+'_tf'
 
@@ -174,6 +174,9 @@ while qqqq > 0 :
         #input_now = input_now.reshape(1,-1)
         input_now = data_util.scaling(input_now)
         pred_now = learner.select_action_norandom(input_now)
+        Qnow = max(learner.Q_values(state))
+        if (Qnow < Qthresh) :
+            pred_now = restparam
 
         if (((j-lastbet)*periodint >= waittime)  and ( (pred_now== upparam ) | (pred_now == downparam)) ):
             print 'Chance!! AI predicted value is', pred_now, \
