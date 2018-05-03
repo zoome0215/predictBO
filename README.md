@@ -1,6 +1,9 @@
 README
 =====
 
+# BETA VERSION IS COMPLETED!
+# Current AI in the master node achieves the win rate of 65% in the backtesting on 2017 data!
+
 # PLEASE HELP! PLEASE CONTRIBUTE!
 
 # Warranty
@@ -21,9 +24,7 @@ It requires `python 2.7` and packages that can be installed with `pip` (I'll mak
 I'm a python noob, so I don't know when it will be. It would be nice if I can make some `setup.py`.
 
 # Progress
-Currently, training AI on google cloud platform (via virtual machine). numlearns = 46477. Took 10 days.
-
-Please contribute to this project!!!!! I'm currently working all by my self.
+If you backtest using the AI in Master node, you can see that the winrate is around 65% (plus or minus 3%)!
 
 # TO DO
 + 日本語のドキュメンテーションの作成
