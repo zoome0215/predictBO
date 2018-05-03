@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from __future__ import division
 
+import math
 import numpy as np
 import os, os.path
 import sys
@@ -106,7 +107,7 @@ for month in range(1,5):
                 if checkQ :
                     Qvals.append(learner.Q_values(state))
 
-                reward = data_util.calcreward(action,diff_io,bet,gain)
+                reward = math.floor(data_util.calcreward(action,diff_io,bet,gain))
                 if (action != 0):
                     if (Qnow > Qthresh):
                         moneynow += reward
@@ -125,29 +126,27 @@ for month in range(1,5):
                 else:
                     j+= 1
 
-                if moneynow > initmoney:
-                    prof += (moneynow - initmoney)
-                    moneynow = initmoney
-                    
+                if moneynow > 1000:
+                    bet=math.floor(0.10*moneynow)
+                    if bet > 500:
+                        bet = 500
+                else :
+                    bet=20
 
                 if moneynow < 0:
-                    if (prof > initmoney):
-                        moneynow = initmoney
-                        prof = prof-initmoney
-                    else :
-                        print 'money became negative'
-                        print test_year, month, i, '$', prof, ', ', numTAs,'transactions, which is', \
-                                numTAs/(numchances/(60*60/2)), \
-                            ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
-                        print 'Stopped at step', j
-                        sys.exit(0)
+                    print 'money became negative'
+                    print test_year, month, i, '$', moneynow, ', ', numTAs,'transactions, which is', \
+                            numTAs/(numchances/(60*60/2)), \
+                        ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
+                    print 'Stopped at step', j
+                    sys.exit(0)
 
             if checkQ:
                 count += 1
                 if count > countthresh:
                     Qchecked = True
 
-            print test_year, month, i, '$', (moneynow+prof), \
+            print test_year, month, i, '$', moneynow, \
                     ', ', numTAs,'transactions, which is', numTAs/(numchances/(60*60/2)), \
                 ' bets per hour', 'over', (numchances/(60*60/periodint)), 'hours'
             if Qchecked :
