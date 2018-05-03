@@ -174,7 +174,7 @@ while qqqq > 0 :
         #input_now = input_now.reshape(1,-1)
         input_now = data_util.scaling(input_now)
         pred_now = learner.select_action_norandom(input_now)
-        Qnow = max(learner.Q_values(state))
+        Qnow = max(learner.Q_values(input_now))
         if (Qnow < Qthresh) :
             pred_now = restparam
 
