@@ -52,7 +52,7 @@ def makeinput(interval,periodint,val_list):
     return datin
 
 def output_data(time_list,val_list,num):
-    outdir = './realdata/'
+    outdir = './data/realdata/'
     outname= outdir+'data-'+str(int(num)).zfill(4)+'.out'
     val_list = np.squeeze(val_list)
 
