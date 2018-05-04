@@ -26,8 +26,8 @@ def terminateall(driver):
 
 def checktradetime():
     timenow = datetime.now()
-    if ((timenow.hour >= 5) and (timenow.hour < 10) ):
-        print 'It\'s not 9 yet!!!'
+    if ((timenow.hour >= 20) and (timenow.hour < 24) ):
+        print 'It\'s not 12 yet!!!'
         print 'See you tomorrow!'
         return True
     return False
@@ -185,12 +185,12 @@ while qqqq > 0 :
             countTAs += 1
             lastbet=j
 
-        if int(j*periodint) % (60) == 0:
+        if int(j*periodint) % (600) == 0:
             if ((j>0) and (int(j*periodint) % (60*30) == 0)):
                 print 'outputting...'
                 output_data(time_list,val_list,outnum)
 
-            print j*periodint/60 ,'min in main loop elapsed'
+            print j*periodint/600 ,'min in main loop elapsed'
             print 'we have',currcredit.text,'in the account'
             print countTAs,'transactions are made.'
 
