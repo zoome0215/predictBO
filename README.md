@@ -91,6 +91,11 @@ then run
 `backtest.py` to conduct backtesting.
 
 
+## Contact
+If you have any questions or bugs, either submit in the issues tab or directly contact me via e-mail
+(t.hashizume.brisbane@gmail.com).
+
+
 <!---
 ## Donation
 If you can't technically contribute but want to help, please send some bitcoins to
