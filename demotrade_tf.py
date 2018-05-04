@@ -190,7 +190,7 @@ while qqqq > 0 :
                 print 'outputting...'
                 output_data(time_list,val_list,outnum)
 
-            print j*periodint/600 ,'min in main loop elapsed'
+            print j*periodint/60 ,'min in main loop elapsed'
             print 'we have',currcredit.text,'in the account'
             print countTAs,'transactions are made.'
 
