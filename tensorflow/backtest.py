@@ -42,7 +42,7 @@ test_year = 2017
 wait = 10 #min
 
 countthresh = 10
-Qthresh = 1.4
+Qthresh = 1.45
 
 if countthresh > 5:
     checkQ = False

@@ -76,6 +76,9 @@ if you want to continue from the AI that is made previously.
 Backtest can be done using `tensorflow/backtest.py`. Just run it and it should output how much you have profitted 
 if you traded in whatever years you specified.
 
+**The key to the success is a corrrect Qthresh value! right now it is 1.45,
+but if you train further you might want to increase it!**
+
 ## Trying it on demotrade
 
 You can run `demotrade_tf.py` to test the AI on the real trading website (it is a demo trade from high-low Australia).
