@@ -127,10 +127,10 @@ for month in range(1,10):
                     j+= 1
 
                 if moneynow > 1000:
-                    bet=math.floor(0.10*moneynow)
+                    bet=math.floor(0.05*moneynow)
                     if bet > 500:
                         bet = 500
-                else if moneynow < 500 :
+                else if moneynow < 400 :
                     bet=20
 
                 if moneynow < 0:
