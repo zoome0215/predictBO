@@ -85,7 +85,7 @@ Qchecked = False
 count = 0
 Qvals=[]
 prof=0
-for month in range(1,5):
+for month in range(1,10):
     for i in range(0,1000):
         datanow.loaddata(test_year,month,i)
         if (not datanow.exist_data) :
@@ -130,7 +130,7 @@ for month in range(1,5):
                     bet=math.floor(0.10*moneynow)
                     if bet > 500:
                         bet = 500
-                else :
+                else if moneynow < 500 :
                     bet=20
 
                 if moneynow < 0:
