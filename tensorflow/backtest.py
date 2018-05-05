@@ -42,7 +42,7 @@ test_year = 2017
 wait = 10 #min
 
 countthresh = 10
-Qthresh = 1.66
+Qthresh = 1.67
 
 if countthresh > 5:
     checkQ = False
@@ -126,11 +126,11 @@ for month in range(1,10):
                 else:
                     j+= 1
 
-                if moneynow > 1000:
+                if moneynow > 1000 :
                     bet=math.floor(0.05*moneynow)
                     if bet > 500:
                         bet = 500
-                else if moneynow < 400 :
+                elif moneynow < 400 :
                     bet=20
 
                 if moneynow < 0:

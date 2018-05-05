@@ -86,7 +86,7 @@ waittime = 60*5 # in seocnds
 
 betamount = 20
 
-Qthresh = 1.66
+Qthresh = 1.67
 
 AIname = 'realuod_'+str(interval)+'_'+str(betinterval)+'_tf'
 
