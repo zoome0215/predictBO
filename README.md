@@ -96,7 +96,7 @@ then run
 
 ## Contact
 If you have any questions or bugs, either submit in the issues tab or directly contact me via e-mail
-(t.hashizume.brisbane@gmail.com).
+(t.hashizume.glasgow@gmail.com).
 
 
 <!---
